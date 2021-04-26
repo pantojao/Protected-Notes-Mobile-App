@@ -16,7 +16,7 @@ const FoldersDisplay = ({ navigation }) => {
     <View style={styles.folderDisplay}>
       <View style={styles.folderActions}>
        <TextInput label="Search" style={styles.searchbar}/>
-       <Button icon="plus">Add Folder</Button>
+       <Button icon="plus"></Button>
       </View>
      
       {folders.map((folder) => (

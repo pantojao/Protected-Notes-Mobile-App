@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
        alignItems: 'center',
     },
     searchbar: {
-        flexGrow: 1
+        flexGrow: 2
     }
 })
 

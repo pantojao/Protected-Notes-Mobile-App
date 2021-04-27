@@ -4,20 +4,21 @@ import {Text, View, TextInput, Button, StyleSheet } from 'react-native';
 
 const NotePad = ({navigation}) => {
     const [notes, setNotes] = useState("")
-    const [title, setTitle] = useState("Passwords")
+    const [editing, setEditing] = useState(false)
     
     return (
         <View style={styles.notesView}>
-            <Text style={styles.title}>{title}</Text>
-
-            <Button title="Go Back" onPress={(() => navigation.navigate('NotesDisplay'))} />
-            <TextInput 
-            style={styles.textInput}
-            multiline={true}
-            placeholder="Type here"
-            onChangeText={text => setNotes(text)}
-            defaultValue={notes}
-            />
+            <Button onPress={() => setEditing(!editing)} title="press"/>
+            {editing ? 
+                <TextInput 
+                style={styles.textInput}
+                multiline={true}
+                placeholder="Type here"
+                onChangeText={text => setNotes(text)}
+                defaultValue={notes} />
+                :
+                <Text>{notes}</Text>
+            }
         </View>
     )
 }

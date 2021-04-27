@@ -1,18 +1,31 @@
-import React, {useState} from 'react' 
-import {Text, View, TextInput, Button, StyleSheet } from 'react-native';
+import React, {useState, useContext, useEffect} from 'react' 
+import {Text, View} from 'react-native';
+import {Button} from 'react-native-paper'
 import styles from './NotesDisplayStyles'
-import NotesPreview from './NotePreview'
+import NoteCard from './NoteCard'
+import { UserNotes } from '../../UserNotes';
 
-const NotesDisplay = ({navigation}) => {
-    const notes = {name: "Passwords", notes: [{noteName: "All My Pass", noteContent: "345gasd3q"}, {noteName: "Instagram", noteContent: "345gasd3q"}, {noteName: "Facebook", noteContent: "345gasd3q"}]}
-    return (
-      <>
-        <Text style={styles.noteTitle}>{notes.name}</Text>
+const NotesDisplay = ({route, navigation}) => {
+  const {folders} = useContext(UserNotes)
+  const [currentFolder, setCurrentFolder] = useState(null)
+
+  useEffect(() => {
+    const currentNotes = folders.find((folder) => folder.id = route.params.noteId)
+    setCurrentFolder(currentNotes)
+  }, [])
+
+  React.useLayoutEffect(() => {
+      navigation.setOptions({
+          headerRight: () => 
+              <Button icon="plus"/>
+         , title: route.params.name})
+  }, [navigation])
+
+    return currentFolder ? (
         <View style={styles.notePreviews}>
-            {notes.notes.map((note) => <NotesPreview key={note.noteName} name={note.noteName}/>)}
+            {currentFolder.notes.map((note) => <NoteCard key={note.id} note={note}/> )}
         </View>
-      </>
-    )
+    ) : null
  }
 
 

@@ -9,20 +9,19 @@ const NotesCard = ({ note }) => {
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-
-  const containerStyle = { backgroundColor: 'red', padding: 20, height: '80%', width:'80%', alignSelf: 'center' }; 
+  
   return (
     <>
       <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
-          <NotePreview text="asdfhasdfkjh" />
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle} >
+          <NotePreview content={note.noteContent} />
         </Modal>
       </Portal>
 
-      <Card style={styles.noteCard} onLongPress={showModal}>
-        <SkeletonPlaceholder>
-          <View style={{ width: "100%", height: 100 }} />
-        </SkeletonPlaceholder>
+      <Card style={styles.noteCard} onLongPress={showModal} elevation={2}>
+          <SkeletonPlaceholder>
+            <View style={{ width: "100%", height: "100%"}} />
+          </SkeletonPlaceholder>
         <Card.Title titleStyle={{ fontSize: 10 }} title={note.noteName} />
       </Card>
 
@@ -32,3 +31,9 @@ const NotesCard = ({ note }) => {
 };
 
 export default NotesCard;
+
+
+
+        {/* <SkeletonPlaceholder>
+          <View style={{ width: "100%", height: 100 }} />
+        </SkeletonPlaceholder> */}

@@ -2,25 +2,27 @@ import React from 'react';
 import { StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-    noteTitle:{
-        textAlign: 'center', 
-        marginVertical: 10,
-        fontSize: 20
-    }, 
     notePreviews:{
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignSelf: 'center'
+        alignSelf: 'center', 
+        marginVertical:20
     },
     noteCard: {
         marginHorizontal: 5,
-        width: '30%'
+        width: '30%',
+        height: 100
     },
     cardTitle: {
         fontSize: 1
-    }
-    
-
+    },
+    containerStyle: {
+    backgroundColor: "lightblue",
+    padding: 20,
+    height: "80%",
+    width: "80%",
+    alignSelf: "center",
+  },
 })
 
 export default styles

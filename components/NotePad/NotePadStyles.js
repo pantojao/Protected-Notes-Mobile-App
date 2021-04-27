@@ -1,25 +1,26 @@
-import React from 'react';
-import { StyleSheet} from 'react-native';
+import React from "react";
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    title:{
-        width: '100%', 
+  title: {
+    width: "100%",
 
-        textAlign: 'center'
-    },
-    notesView: {
-        height: '100%', 
-        width: '100%', 
-        // backgroundColor: 'grey',
-        // flex: '1',
-        // alignItems: 'center', 
-        // justifyContent: 'center'
-    },
-    textInput: {
-        height: '100%',
-        width: '100%',
+    textAlign: "center",
+  },
+  notesView: {
+    height: "100%",
+    width: "100%",
+  },
+  textInput: {
+    height: "100%",
+    width: "100%",
+  },
+  notesPreview: {
+    maxWidth: '100%', 
+    maxHeight: '100%',
+    fontSize: 1, 
+  }
+ 
+});
 
-    }
-})
-
-export default styles
+export default styles;

@@ -1,11 +1,11 @@
 import React, {useState} from 'react' 
 import styles from './NotePadStyles'
-import {Text, View, TextInput, Button, StyleSheet } from 'react-native';
+import {Text, View} from 'react-native';
 
-const NotePreview = ({text}) => {
+const NotePreview = ({content}) => {
     return (
-        <View style={styles.notesView}>
-            <Text>{text}</Text>
+        <View style={styles.notesPreview}>
+            <Text>{content}</Text>
         </View>
     )
 }

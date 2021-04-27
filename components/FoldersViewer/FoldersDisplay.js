@@ -22,7 +22,7 @@ const FoldersDisplay = ({ navigation }) => {
       </View>
      
       {folders.map((folder) => (
-        <Folder key={folder.id} folder={folder} />
+        <Folder  key={folder.id} folder={folder} />
       ))}
     </View>
   );

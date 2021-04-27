@@ -3,6 +3,7 @@ import { StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
     folderDisplay:{
+        marginVertical: 20
     }, 
     folderItem: {
         width: '95%', 
@@ -21,7 +22,8 @@ const styles = StyleSheet.create({
        alignItems: 'center',
     },
     searchbar: {
-        flexGrow: 2
+        flexGrow: 2,
+        marginVertical: 5
     }
 })
 

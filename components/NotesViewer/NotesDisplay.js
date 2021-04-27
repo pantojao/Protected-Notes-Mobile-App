@@ -10,15 +10,19 @@ const NotesDisplay = ({route, navigation}) => {
   const [currentFolder, setCurrentFolder] = useState(null)
 
   useEffect(() => {
-    const currentNotes = folders.find((folder) => folder.id = route.params.noteId)
+
+    const currentNotes = folders.find((folder) => folder.id = route.params.folderId)
     setCurrentFolder(currentNotes)
   }, [])
+
+  console.log(currentFolder, 
+    "--------------------------------")
 
   React.useLayoutEffect(() => {
       navigation.setOptions({
           headerRight: () => 
               <Button icon="plus"/>
-         , title: route.params.name})
+         ,title: route.params.name})
   }, [navigation])
 
     return currentFolder ? (

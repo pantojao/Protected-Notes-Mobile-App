@@ -8,7 +8,7 @@ const Folder = ({folder}) => {
 
     const goToFolder = () => {
         navigation.navigate('NotesDisplay', {
-            noteId: folder.id,
+            folderId: folder.id,
             name: folder.name
         })
     }

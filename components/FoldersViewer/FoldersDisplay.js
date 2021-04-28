@@ -1,44 +1,78 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View } from "react-native";
-import { TextInput, Button,  Paragraph, Dialog, Portal } from "react-native-paper";
+import {
+  TextInput,
+  Button,
+  Paragraph,
+  Dialog,
+  Portal,
+} from "react-native-paper";
 import Folder from "./Folder";
-import {UserNotes} from '../../UserNotes'
-import styles from './FolderStyles'
+import { UserNotes } from "../../UserNotes";
+import styles from "./FolderStyles";
 
 const FoldersDisplay = ({ navigation }) => {
-  const {folders, setFolders} = useContext(UserNotes)
-  const [visible, setVisible] = useState(false); 
-  const [newFolder, setNewFolder] = useState("")
-  
+  const { folders, setFolders } = useContext(UserNotes);
+  const [currentDisplay, setCurrentDisplay] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [newFolder, setNewFolder] = useState("");
+  const [search, setSearch] = useState("");
+
   React.useLayoutEffect(() => {
-      navigation.setOptions({
-          headerRight: () => 
-              <Button icon="plus" onPress={showDialog}/> 
-         })
-  }, [navigation])
+
+    setCurrentDisplay(Object.entries(folders));
+
+    navigation.setOptions({
+      headerRight: () => <Button icon="plus" onPress={showDialog} />,
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    if (!folders) return;
+
+    let display = Object.entries(folders);
+    let searchString = search.trim().toLowerCase();
+    console.log(display)
+    if (!searchString.length) setCurrentDisplay(display);
+
+    if (searchString.length) {
+      display = display.filter(([id, folder]) =>
+        folder.name.toLowerCase().match(searchString)
+      );
+      setCurrentDisplay(display);
+    }
+  }, [search]);
+
 
   const showDialog = () => setVisible(true);
 
   const addFolder = () => {
-      console.log(newFolder)
-      hideDialog()
-  }
-  
+    console.log(newFolder);
+    hideDialog();
+  };
+
   const hideDialog = () => {
     setVisible(false);
-    setNewFolder("")
-  }
-
+    setNewFolder("");
+  };
 
   return (
-    <View style={styles.folderDisplay}>
-
+    <>
+      <TextInput 
+      label="Search" 
+      value={search}
+      onChangeText={(text) => setSearch(text)}
+      style={styles.searchbar} />
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Title>New Folder</Dialog.Title>
           <Dialog.Content>
             <Paragraph>Enter name for your new folder.</Paragraph>
-            <TextInput label="Search" value={newFolder} onChangeText={(text) => setNewFolder(text)}/>
+            <TextInput
+              label="Search"
+              value={newFolder}
+              onChangeText={(text) => setNewFolder(text)}
+            />
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Cancel</Button>
@@ -46,15 +80,14 @@ const FoldersDisplay = ({ navigation }) => {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-
-      <View style={styles.folderActions}>
-       <TextInput label="Search" style={styles.searchbar}/>
+      {currentDisplay && 
+      <View style={styles.folderDisplay}>
+        {currentDisplay.map(([id, folder]) => (
+          <Folder key={id} folder={folder} />
+        ))}
       </View>
-      {Object.entries(folders).map(([id, folder]) => (
-        <Folder key={id} folder={folder} />
-      ))}
-      
-    </View>
+      }
+    </>
   );
 };
 

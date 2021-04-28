@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
        alignItems: 'center',
     },
     searchbar: {
-        flexGrow: 2,
+        height: 65, 
         marginVertical: 5
     }
 })

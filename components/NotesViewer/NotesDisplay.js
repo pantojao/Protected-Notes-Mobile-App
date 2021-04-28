@@ -9,25 +9,18 @@ const NotesDisplay = ({route, navigation}) => {
   const {folders} = useContext(UserNotes)
   const [currentFolder, setCurrentFolder] = useState(null)
 
-  useEffect(() => {
-
-    const currentNotes = folders.find((folder) => folder.id = route.params.folderId)
-    setCurrentFolder(currentNotes)
-  }, [])
-
-  console.log(currentFolder, 
-    "--------------------------------")
-
   React.useLayoutEffect(() => {
-      navigation.setOptions({
-          headerRight: () => 
-              <Button icon="plus"/>
-         ,title: route.params.name})
+    const currentNotes = folders.find((folder) => folder.id === route.params.folderId)
+    setCurrentFolder(currentNotes)
+    navigation.setOptions({
+        headerRight: () => 
+            <Button icon="plus"/>
+     , title: route.params.name})
   }, [navigation])
 
     return currentFolder ? (
         <View style={styles.notePreviews}>
-            {currentFolder.notes.map((note) => <NoteCard key={note.id} note={note}/> )}
+            {currentFolder.notes.map((note) => <NoteCard key={note.id} note={note} folderId={route.params.folderId}/> )}
         </View>
     ) : null
  }

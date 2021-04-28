@@ -31,38 +31,37 @@ export default function App() {
   );
 }
 
-const data = [
-  {
+const data = {
+  1: {
     id: 1,
     name: "All Notes",
     numberOfNotes: 5,
-    notes: [
-      { id: 1, noteName: "All My Pass", noteContent: "345gasd3q" },
-      { id: 2, noteName: "Instagram", noteContent: "345gasd3q" },
-      { id: 3, noteName: "Facebook", noteContent: "345gasd3q" },
-    ],
+    notes: {
+      1: {id: 1, noteName: "All My Pass", noteContent: "345gasd3q" },
+      2: {id: 2, noteName: "Instagram", noteContent: "345gasd3q"},
+      3: {id: 3, noteName: "Facebook", noteContent: "345gasd3q" }
+    }
   },
-  {
+  2:{
     id: 2,
     name: "Passwords",
     numberOfNotes: 3,
-    notes: [
-      { id: 1, noteName: "All My Pass", noteContent: "345gasd3q" },
-      { id: 2, noteName: "Instagram", noteContent: "345gasd3q" },
-      { id: 3, noteName: "Facebook", noteContent: "345gasd3q" },
-      { id: 4, noteName: "All My Pass", noteContent: "345gasd3q" },
-      { id: 5, noteName: "Instagram", noteContent: "345gasd3q" },
-      { id: 6, noteName: "Facebook", noteContent: "345gasd3q" },
-    ],
+    notes: {
+      1: {id: 1, noteName: "All My Pass", noteContent: "345gasd3q" },
+      2: {id: 2, noteName: "Instagram", noteContent: "345gasd3q"},
+      3: {id: 3, noteName: "Facebook", noteContent: "345gasd3q" },
+      5: {id: 5, noteName: "Instagram", noteContent: "345gasd3q"},
+      6: {id: 6, noteName: "Facebook", noteContent: "345gasd3q" }
+    }
   },
-  {
+  3:{
     id: 3,
     name: "Personal",
     numberOfNotes: 2,
-    notes: [
-      { id: 1, noteName: "All My Pass", noteContent: "345gasd3q" },
-      { id: 2, noteName: "Instagram", noteContent: "345gasd3q" },
-      { id: 3, noteName: "Facebook", noteContent: "345gasd3q" },
-    ],
+    notes: {
+      1: {id: 1, noteName: "PersonalOne", noteContent: "345gasd3q" },
+      2: {id: 2, noteName: "PersonalTwo", noteContent: "345gasd3q"},
+      3: {id: 3, noteName: "PersonalThree", noteContent: "345gasd3q" }
+    }
   },
-];
+};

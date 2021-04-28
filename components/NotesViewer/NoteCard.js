@@ -11,9 +11,10 @@ const NotesCard = ({ note, folderId }) => {
   const navigation = useNavigation(); 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
   
   const openNotePad = () => {
-    navigation.push("NotePad", {
+    navigation.navigate("NotePad", {
       noteId: note.id,
       folderId: folderId, 
       name: note.noteName

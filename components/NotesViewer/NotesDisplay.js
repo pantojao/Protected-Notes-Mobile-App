@@ -8,9 +8,11 @@ import { UserNotes } from '../../UserNotes';
 const NotesDisplay = ({route, navigation}) => {
   const {folders} = useContext(UserNotes)
   const [currentFolder, setCurrentFolder] = useState(null)
+  
 
   React.useLayoutEffect(() => {
-    const currentNotes = folders.find((folder) => folder.id === route.params.folderId)
+    const currentNotes = folders[route.params.folderId]
+    console.log(Object.entries(currentNotes.notes), "-----------------")
     setCurrentFolder(currentNotes)
     navigation.setOptions({
         headerRight: () => 
@@ -18,9 +20,9 @@ const NotesDisplay = ({route, navigation}) => {
      , title: route.params.name})
   }, [navigation])
 
-    return currentFolder ? (
+    return currentFolder!==null ? (
         <View style={styles.notePreviews}>
-            {currentFolder.notes.map((note) => <NoteCard key={note.id} note={note} folderId={route.params.folderId}/> )}
+            {Object.entries(currentFolder.notes).map(([id, note]) => <NoteCard key={id} note={note} folderId={route.params.folderId}/> )}
         </View>
     ) : null
  }

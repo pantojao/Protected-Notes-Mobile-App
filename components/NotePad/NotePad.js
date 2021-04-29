@@ -6,33 +6,37 @@ import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 const NotePad = ({ route, navigation }) => {
   const { folders, setFolders } = useContext(UserNotes);
   const [note, setNote] = useState(null);
-  const [noteName, setNoteName] = useState (null); 
-  const [noteContent, setNoteContent] = useState(null)
+  const [noteName, setNoteName] = useState(null);
+  const [noteContent, setNoteContent] = useState(null);
   const [editing, setEditing] = useState(false);
 
   React.useLayoutEffect(() => {
-    const currentNote = folders[route.params.folderId].notes[route.params.noteId]
+    const currentNote = folders[route.params.folderId].notes[route.params.noteId];
+
     setNote(currentNote);
-    setNoteName(currentNote.noteName)
-    setNoteContent(currentNote.noteContent)
-    navigation.setOptions({title: "", headerRight: () => <Button onPress={() => saveContent()} title="save" /> });
+    setNoteName(currentNote.noteName);
+    setNoteContent(currentNote.noteContent);
+
+    navigation.setOptions({
+      title: route.params.name,
+      headerRight: () => <Button onPress={() => saveContent()} title="Done"/>,
+    });
+    
   }, [navigation]);
 
   const saveContent = () => {
-    note.noteContent = noteContent
-    note.noteName = noteName
-    let newFolder = folders
-    newFolder[route.params.folderId].notes[route.params.noteId] = note
-    setFolders(newFolder)
-    console.log("saved")
-  }
+    if (noteContent === null || note) return;
+    note.noteContent = noteContent;
+    note.noteName = noteName;
+    let newFolder = folders;
+    newFolder[route.params.folderId].notes[route.params.noteId] = note;
+    setFolders(newFolder);
+    console.log("saved");
+  };
 
   return (
     <View style={styles.notesView}>
-
-      <Text>{route.params.name}</Text>
-    
-     {editing ? (
+      {editing ? (
         <TextInput
           style={styles.textInput}
           multiline={true}
@@ -41,8 +45,10 @@ const NotePad = ({ route, navigation }) => {
           defaultValue={noteContent}
         />
       ) : (
-        <Text onPress={() => setEditing(!editing)}>{noteContent}</Text>
-      )} 
+        <Text style={styles.noteContent} onPress={() => setEditing(!editing)}>
+          {noteContent}
+        </Text>
+      )}
     </View>
   );
 };

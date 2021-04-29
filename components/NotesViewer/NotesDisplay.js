@@ -27,7 +27,7 @@ const NotesDisplay = ({ route, navigation }) => {
     setCurrentDisplay(Object.entries(currentNotes.notes));
 
     navigation.setOptions({
-      headerRight: () => <Button icon="plus" onPress={showDialog} />,
+      headerRight: () => <Button icon="plus" onPress={showDialog} mode="text" labelStyle={{ fontSize: 25 }} />,
       title: route.params.name,
     });
   }, [navigation]);

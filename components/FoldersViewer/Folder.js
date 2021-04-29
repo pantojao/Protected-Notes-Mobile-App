@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React from 'react';
-import {List} from 'react-native-paper'
+import {List, Card} from 'react-native-paper'
 import styles from './FolderStyles'
 
 const Folder = ({folder}) => {
@@ -14,13 +14,17 @@ const Folder = ({folder}) => {
     }
 
     return (
-        <List.Item 
-            style={styles.folderItem}
-            title={folder.name}
-            onPress={goToFolder}
-            right={() => <List.Icon icon="arrow-right"/>}
-        />
-    )
+        <Card elevation={2} style={styles.folderItem} onPress={goToFolder}>
+            <Card.Title title={folder.name} right={() => <List.Icon icon="arrow-right"/>}/>
+        </Card>
+   )
 }
 
 export default Folder
+        // <List.Item
+        //     style={styles.folderItem}
+        //     title={folder.name}
+        //     onPress={goToFolder}
+        //     right={() => <List.Icon icon="arrow-right"/>}
+        // />
+ 

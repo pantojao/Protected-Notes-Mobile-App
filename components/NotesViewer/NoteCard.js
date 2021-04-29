@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View} from "react-native";
 import { useNavigation } from '@react-navigation/core';
-import {Card, Modal, Portal } from "react-native-paper";
+import {Card, Modal, Portal,Text } from "react-native-paper";
 import styles from "./NotesDisplayStyles";
-import NotePreview from '../NotePad/NotePreview'
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 const NotesCard = ({ note, folderId }) => {
@@ -25,7 +24,7 @@ const NotesCard = ({ note, folderId }) => {
     <>
       <Portal>
         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle} >
-          <NotePreview content={note.noteContent} />
+          <Text>{note.noteContent}</Text>
         </Modal>
       </Portal>
 
@@ -33,9 +32,8 @@ const NotesCard = ({ note, folderId }) => {
           <SkeletonPlaceholder>
             <View style={{ width: "100%", height: "100%"}} />
           </SkeletonPlaceholder>
-        <Card.Title titleStyle={{ fontSize: 10 }} title={note.noteName} />
+        <Card.Title titleStyle={{ fontSize: 12 }} title={note.noteName} />
       </Card>
-
     </>
 
   );

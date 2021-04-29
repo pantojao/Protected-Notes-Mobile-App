@@ -21,18 +21,18 @@ const FoldersDisplay = ({ navigation }) => {
   React.useLayoutEffect(() => {
 
     setCurrentDisplay(Object.entries(folders));
-
     navigation.setOptions({
-      headerRight: () => <Button icon="plus" onPress={showDialog} />,
+      headerRight: () => <Button icon="plus"  mode="text" labelStyle={{ fontSize: 25 }} onPress={showDialog} />,
     });
+
   }, [navigation]);
 
   useEffect(() => {
+    
     if (!folders) return;
-
     let display = Object.entries(folders);
     let searchString = search.trim().toLowerCase();
-    console.log(display)
+
     if (!searchString.length) setCurrentDisplay(display);
 
     if (searchString.length) {
@@ -42,7 +42,6 @@ const FoldersDisplay = ({ navigation }) => {
       setCurrentDisplay(display);
     }
   }, [search]);
-
 
   const showDialog = () => setVisible(true);
 
@@ -58,11 +57,13 @@ const FoldersDisplay = ({ navigation }) => {
 
   return (
     <>
-      <TextInput 
-      label="Search" 
-      value={search}
-      onChangeText={(text) => setSearch(text)}
-      style={styles.searchbar} />
+      <TextInput
+        label="Search"
+        value={search}
+        onChangeText={(text) => setSearch(text)}
+        style={styles.searchbar}
+      />
+
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Title>New Folder</Dialog.Title>
@@ -80,13 +81,14 @@ const FoldersDisplay = ({ navigation }) => {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-      {currentDisplay && 
-      <View style={styles.folderDisplay}>
-        {currentDisplay.map(([id, folder]) => (
-          <Folder key={id} folder={folder} />
-        ))}
-      </View>
-      }
+
+      {currentDisplay && (
+        <View style={styles.folderDisplay}>
+          {currentDisplay.map(([id, folder]) => (
+            <Folder key={id} folder={folder} />
+          ))}
+        </View>
+      )}
     </>
   );
 };

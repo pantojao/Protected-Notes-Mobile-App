@@ -3,16 +3,13 @@ import { StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
     folderDisplay:{
-        marginVertical: 20
+        marginVertical: 10
     }, 
     folderItem: {
         width: '95%', 
         alignSelf: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.4,
-        shadowRadius: 1,  
-        marginVertical: 5 
+        height: 70,
+        marginVertical: 5
     },
     folderActions: {
        width: '95%', 
@@ -22,9 +19,12 @@ const styles = StyleSheet.create({
        alignItems: 'center',
     },
     searchbar: {
-        height: 65, 
-        marginVertical: 5
-    }
+        height: 60, 
+        width: '95%',
+        alignSelf: 'center', 
+        marginVertical: 10
+    },
+
 })
 
 export default styles

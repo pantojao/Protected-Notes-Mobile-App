@@ -10,6 +10,8 @@ import {
 import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
 import styles from "./FolderStyles";
+import * as Haptics from 'expo-haptics';
+
 
 const FoldersDisplay = ({ navigation }) => {
   const { folders, setFolders } = useContext(UserNotes);
@@ -28,7 +30,7 @@ const FoldersDisplay = ({ navigation }) => {
   }, [navigation]);
 
   useEffect(() => {
-    
+
     if (!folders) return;
     let display = Object.entries(folders);
     let searchString = search.trim().toLowerCase();
@@ -43,10 +45,14 @@ const FoldersDisplay = ({ navigation }) => {
     }
   }, [search]);
 
-  const showDialog = () => setVisible(true);
+  const showDialog = () =>{ 
+    Haptics.selectionAsync()
+    setVisible(true);
+  }
 
   const addFolder = () => {
     console.log(newFolder);
+    
     hideDialog();
   };
 

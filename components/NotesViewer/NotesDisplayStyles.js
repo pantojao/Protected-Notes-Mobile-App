@@ -2,16 +2,14 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   notePreviews: {
-    flexDirection: "row",
-    flexWrap: "wrap",
     alignSelf: "center",
     justifyContent: 'center', 
+    width: '95%',
     marginVertical: 10,
   },
   noteCard: {
-    marginHorizontal: 15,
-    marginVertical: 25,
-    width: '28%',
+    marginVertical: 10, 
+    width: '100%',
     height: 80,
   },
   searchbar: {
@@ -25,8 +23,11 @@ const styles = StyleSheet.create({
     padding: 20,
     height: "80%",
     width: "80%",
+    justifyContent: "center", 
+    alignItems: "center", 
     alignSelf: "center",
   },
+
 });
 
 export default styles;

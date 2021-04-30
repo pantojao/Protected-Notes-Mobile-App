@@ -7,7 +7,7 @@ import {
   Dialog,
   Portal,
 } from "react-native-paper";
-
+import * as Haptics from 'expo-haptics';
 import styles from "./NotesDisplayStyles";
 import NoteCard from "./NoteCard";
 import { UserNotes } from "../../UserNotes";
@@ -22,7 +22,7 @@ const NotesDisplay = ({ route, navigation }) => {
 
   React.useLayoutEffect(() => {
     const currentNotes = folders[route.params.folderId];
-    
+  
     setCurrentFolder(currentNotes);
     setCurrentDisplay(Object.entries(currentNotes.notes));
 
@@ -48,7 +48,10 @@ const NotesDisplay = ({ route, navigation }) => {
     }
   }, [search]);
 
-  const showDialog = () => setVisible(true);
+  const showDialog = () => {
+    Haptics.selectionAsync()
+    setVisible(true)
+  };
 
   const addNote = () => {
     console.log(newNote);

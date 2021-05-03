@@ -10,8 +10,7 @@ import {
 import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
 import styles from "./FolderStyles";
-import * as Haptics from 'expo-haptics';
-
+import * as Haptics from "expo-haptics";
 
 const FoldersDisplay = ({ navigation }) => {
   const { folders, setFolders } = useContext(UserNotes);
@@ -21,38 +20,44 @@ const FoldersDisplay = ({ navigation }) => {
   const [search, setSearch] = useState("");
 
   React.useLayoutEffect(() => {
-
-    setCurrentDisplay(Object.entries(folders));
     navigation.setOptions({
-      headerRight: () => <Button icon="plus"  mode="text" labelStyle={{ fontSize: 25 }} onPress={showDialog} />,
+      headerRight: () => (
+        <Button
+          icon="plus"
+          mode="text"
+          labelStyle={{ fontSize: 25 }}
+          onPress={showDialog}
+        />
+      ),
     });
-
   }, [navigation]);
 
   useEffect(() => {
-
     if (!folders) return;
-    let display = Object.entries(folders);
+    let display = folders.folders;
     let searchString = search.trim().toLowerCase();
-
     if (!searchString.length) setCurrentDisplay(display);
-
     if (searchString.length) {
-      display = display.filter(([id, folder]) =>
+      display = display.filter((folder) =>
         folder.name.toLowerCase().match(searchString)
       );
       setCurrentDisplay(display);
     }
   }, [search]);
 
-  const showDialog = () =>{ 
-    Haptics.selectionAsync()
+  useEffect(() => {
+    if (!folders) return;
+    setCurrentDisplay(folders.folders);
+    console.log(folders)
+  }, [folders]);
+
+
+  const showDialog = () => {
+    Haptics.selectionAsync();
     setVisible(true);
-  }
+  };
 
   const addFolder = () => {
-    console.log(newFolder);
-    
     hideDialog();
   };
 
@@ -90,8 +95,8 @@ const FoldersDisplay = ({ navigation }) => {
 
       {currentDisplay && (
         <View style={styles.folderDisplay}>
-          {currentDisplay.map(([id, folder]) => (
-            <Folder key={id} folder={folder} />
+          {currentDisplay.map((folder) => (
+            <Folder key={folder.folder_id} folder={folder} />
           ))}
         </View>
       )}

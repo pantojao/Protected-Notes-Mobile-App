@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/core";
 import { Card, Modal, Portal, Text } from "react-native-paper";
 import styles from "./NotesDisplayStyles";
 import * as Haptics from "expo-haptics";
-// import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 const NotesCard = ({ note, folderId }) => {
   const [visible, setVisible] = useState(false);
@@ -18,9 +17,9 @@ const NotesCard = ({ note, folderId }) => {
   const openNotePad = () => {
     Haptics.selectionAsync();
     navigation.navigate("NotePad", {
-      noteId: note.id,
+      noteId: note.note_id,
       folderId: folderId,
-      name: note.noteName,
+      name: note.note_name,
     });
   };
 
@@ -32,7 +31,7 @@ const NotesCard = ({ note, folderId }) => {
           onDismiss={hideModal}
           contentContainerStyle={styles.containerStyle}
         >
-          <Text>{note.noteContent}</Text>
+          <Text>{note.note_content}</Text>
         </Modal>
       </Portal>
 
@@ -46,7 +45,7 @@ const NotesCard = ({ note, folderId }) => {
           titleStyle={{
             fontSize: 15, 
           }}
-          title={note.noteName}
+          title={note.note_name}
           
         />
       </Card>
@@ -56,10 +55,3 @@ const NotesCard = ({ note, folderId }) => {
 
 export default NotesCard;
 
-{
-  /* <Card.Content style={{ maxWidth: '100%', width: "100%", height: "100%"}}>
-            <SkeletonPlaceholder speed={2000}>
-              <View style={{ maxWidth: "100%", width: 200, height: 28}} />
-            </SkeletonPlaceholder>
-          </Card.Content> */
-}

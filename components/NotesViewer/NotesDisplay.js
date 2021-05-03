@@ -14,35 +14,34 @@ import { UserNotes } from "../../UserNotes";
 
 const NotesDisplay = ({ route, navigation }) => {
   const { folders } = useContext(UserNotes);
-  const [currentFolder, setCurrentFolder] = useState(null);
+  const [currentFolder, setCurrentFolder] = useState(null)
   const [currentDisplay, setCurrentDisplay] = useState(null);
   const [newNote, setNewNote] = useState("");
   const [search, setSearch] = useState("");
   const [visible, setVisible] = useState(false);
 
-  React.useLayoutEffect(() => {
-    const currentNotes = folders[route.params.folderId];
-  
-    setCurrentFolder(currentNotes);
-    setCurrentDisplay(Object.entries(currentNotes.notes));
+ 
 
+  React.useLayoutEffect(() => {
+    const current = folders.folders.find((folder) => folder.folder_id === route.params.folderId)
+    setCurrentFolder(current)
+    setCurrentDisplay(current.notes);
     navigation.setOptions({
       headerRight: () => <Button icon="plus" onPress={showDialog} mode="text" labelStyle={{ fontSize: 25 }} />,
       title: route.params.name,
     });
+
   }, [navigation]);
 
   useEffect(() => {
-    if (!currentFolder) return;
-
-    let display = Object.entries(currentFolder.notes);
+    if (currentFolder === null) return
+    let display = currentFolder.notes
     let searchString = search.trim().toLowerCase();
-
     if (!searchString.length) setCurrentDisplay(display);
 
     if (searchString.length) {
-      display = display.filter(([id, note]) =>
-        note.noteName.toLowerCase().match(searchString)
+      display = display.filter((note) =>
+        note.note_name.toLowerCase().match(searchString)
       );
       setCurrentDisplay(display);
     }
@@ -90,10 +89,10 @@ const NotesDisplay = ({ route, navigation }) => {
         onChangeText={(text) => setSearch(text)}
       />
 
-      {currentFolder && (
+      {currentDisplay && (
         <View style={styles.notePreviews}>
-          {currentDisplay.map(([id, note]) => (
-            <NoteCard key={id} note={note} folderId={route.params.folderId} />
+          {currentDisplay.map((note) => (
+            <NoteCard key={note.note_id} note={note} folderId={route.params.folderId} />
           ))}
         </View>
       )}

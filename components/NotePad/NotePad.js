@@ -11,15 +11,17 @@ const NotePad = ({ route, navigation }) => {
   const [editing, setEditing] = useState(false);
 
   React.useLayoutEffect(() => {
-    const currentNote = folders[route.params.folderId].notes[route.params.noteId];
+    const currentNote = folders.folders
+      .find((folder) => folder.folder_id === route.params.folderId)
+      .notes.find((note) => note.note_id === route.params.noteId);
 
     setNote(currentNote);
-    setNoteName(currentNote.noteName);
-    setNoteContent(currentNote.noteContent);
+    setNoteName(currentNote.note_name);
+    setNoteContent(currentNote.note_content);
 
     navigation.setOptions({
       title: route.params.name,
-      headerRight: () => <Button onPress={() => saveContent()} title="Done"/>,
+      headerRight: () => <Button onPress={() => saveContent()} title="Done" />,
     });
     
   }, [navigation]);

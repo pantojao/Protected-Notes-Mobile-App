@@ -43,10 +43,9 @@ const NotesCard = ({ note, folderId }) => {
       >
         <Card.Title
           titleStyle={{
-            fontSize: 15, 
+            fontSize: 15,
           }}
           title={note.note_name}
-          
         />
       </Card>
     </>
@@ -54,4 +53,3 @@ const NotesCard = ({ note, folderId }) => {
 };
 
 export default NotesCard;
-

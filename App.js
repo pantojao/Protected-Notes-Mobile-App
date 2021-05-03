@@ -44,29 +44,31 @@ export default function App() {
   const getData = async () => {
     const userData = { folders: [] };
     try {
-      //   const docRef = db.collection("users").doc("FAsiWsTTogRLES4FfNfUYCDKOTA3");
-      //   const doc = await docRef.get();
-      //   const folders = await doc.ref.collection("Folders").get();
+        const docRef = db.collection("users").doc("FAsiWsTTogRLES4FfNfUYCDKOTA3");
+        const doc = await docRef.get();
+        const folders = await doc.ref.collection("Folders").get();
 
-      //   folders.forEach(async (folder) => {
-      //     let currentFolder = {};
-      //     const folderName = folder.data().name;
-      //     const notes = await folder.ref.collection("Notes").get();
+        Promise.all(folders.forEach(async (folder) => {
+          const folderData = folder.data()
+          const currentFolder = {folder_id: folder.id, folder_name: folderData.name,  notes: []}
+          const notes = await folder.ref.collection("Notes").get();
 
-      //     currentFolder[folderName] = [];
+         notes.forEach(async(note) => {
+            const noteData = note.data();
+            currentFolder['notes'].push({
+              note_id: note.id,
+              note_name: noteData.note_name,
+              note_content: noteData.note_content,
+            });
+          });
 
-      //     notes.forEach((note) => {
-      //       const noteData = note.data();
-      //       currentFolder[folderName].push({
-      //         note_id: note.note_id,
-      //         note_name: noteData.note_name,
-      //         note_content: noteData.note_content,
-      //       });
-      //     });
+          userData["folders"].push(currentFolder);
+          console.log(currentFolder)
 
-      //     userData["folders"].push(currentFolder);
-      // });
-      setFolders(data);
+      }));
+
+      setFolders(userData);
+
     } catch (error) {
       console.log("Error getting document:", error);
     }

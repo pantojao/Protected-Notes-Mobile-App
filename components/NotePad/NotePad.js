@@ -4,17 +4,18 @@ import { UserNotes } from "../../UserNotes";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 
 const NotePad = ({ route, navigation }) => {
-  const { folders, setFolders } = useContext(UserNotes);
+  const { userData, setUserData } = useContext(UserNotes);
   const [note, setNote] = useState(null);
   const [noteName, setNoteName] = useState(null);
   const [noteContent, setNoteContent] = useState(null);
   const [editing, setEditing] = useState(false);
 
   React.useLayoutEffect(() => {
-    const currentNote = folders.folders
-      .find((folder) => folder.folder_id === route.params.folderId)
-      .notes.find((note) => note.note_id === route.params.noteId);
-
+    const currentNote = userData.folders.find(
+      (folder) => folder.folder_id === route.params.folderId
+    )["notes"][route.params.noteId];
+    
+    console.log(currentNote, "This is the current note");
     setNote(currentNote);
     setNoteName(currentNote.note_name);
     setNoteContent(currentNote.note_content);
@@ -23,17 +24,10 @@ const NotePad = ({ route, navigation }) => {
       title: route.params.name,
       headerRight: () => <Button onPress={() => saveContent()} title="Done" />,
     });
-    
   }, [navigation]);
 
   const saveContent = () => {
     if (noteContent === null || note) return;
-    note.noteContent = noteContent;
-    note.noteName = noteName;
-    let newFolder = folders;
-    newFolder[route.params.folderId].notes[route.params.noteId] = note;
-    setFolders(newFolder);
-    console.log("saved");
   };
 
   return (

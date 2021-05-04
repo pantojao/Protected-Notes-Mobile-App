@@ -9,24 +9,12 @@ import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import { UserNotes } from "./UserNotes";
 import * as firebase from "firebase";
-
-import { Text } from "react-native";
+import {getData} from './GetData'
 const Stack = createStackNavigator();
 
-var firebaseConfig = {
-  apiKey: "AIzaSyD8ZvWx_uMqFy7RV1cPiGyucWcHG2uAIVw",
-  authDomain: "passwordnotes-8c7df.firebaseapp.com",
-  projectId: "passwordnotes-8c7df",
-  storageBucket: "passwordnotes-8c7df.appspot.com",
-  messagingSenderId: "475930463775",
-  appId: "1:475930463775:web:092bbff5ba87def9fa8f2a",
-};
-
-if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 
 export default function App() {
-  const [folders, setFolders] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -37,46 +25,13 @@ export default function App() {
       }
 
       setLoggedIn(true);
-      getData();
+      getData(userData, setUserData);
     });
   }, []);
 
-  const getData = async () => {
-    const userData = { folders: [] };
-    try {
-        const docRef = db.collection("users").doc("FAsiWsTTogRLES4FfNfUYCDKOTA3");
-        const doc = await docRef.get();
-        const folders = await doc.ref.collection("Folders").get();
-
-        Promise.all(folders.forEach(async (folder) => {
-          const folderData = folder.data()
-          const currentFolder = {folder_id: folder.id, folder_name: folderData.name,  notes: []}
-          const notes = await folder.ref.collection("Notes").get();
-
-         notes.forEach(async(note) => {
-            const noteData = note.data();
-            currentFolder['notes'].push({
-              note_id: note.id,
-              note_name: noteData.note_name,
-              note_content: noteData.note_content,
-            });
-          });
-
-          userData["folders"].push(currentFolder);
-          console.log(currentFolder)
-
-      }));
-
-      setFolders(userData);
-
-    } catch (error) {
-      console.log("Error getting document:", error);
-    }
-  };
-
-  const providerValue = useMemo(() => ({ folders, setFolders }), [
-    folders,
-    setFolders,
+  const providerValue = useMemo(() => ({ userData, setUserData }), [
+    userData,
+    setUserData,
   ]);
 
   return !loggedIn ? (
@@ -107,39 +62,66 @@ export default function App() {
   );
 }
 
-const data = {
-  folders: [
-    {
-      folder_name: "All Notes",
-      folder_id: 1, 
-      notes: [
-        { note_id: 1, note_name: "All My Pass", note_content: "345gasd3q" },
-        { note_id: 2, note_name: "Instagram", note_content: "345gasd3q" },
-        { note_id: 3, note_name: "Facebook", note_content: "345gasd3q" },
-      ],
-    },
-    {
-      folder_name: "Passwords",
-      folder_id: 2, 
-      notes: [
-        { note_id: 1, note_name: "All My Pass", note_content: "345gasd3q" },
-        { note_id: 2, note_name: "Instagram", note_content: "345gasd3q" },
-        { note_id: 3, note_name: "Facebook", note_content: "345gasd3q" },
-        { note_id: 5, note_name: "Instagram", note_content: "345gasd3q" },
-        { note_id: 6, note_name: "Facebook", note_content: "345gasd3q" },
-      ],
-    },
-    {
-      folder_name: "Personal",
-      folder_id: 3,
-      notes: [
-        { note_id: 1, note_name: "PersonalOne", note_content: "345gasd3q" },
-        { note_id: 2, note_name: "PersonalTwo", note_content: "345gasd3q" },
-        { note_id: 3, note_name: "PersonalThree", note_content: "345gasd3q" },
-      ],
-    },
-  ],
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const data = {
+//   folders: [
+//     {
+//       folder_name: "All Notes",
+//       folder_id: 1,
+//       notes: [
+//         { note_id: 1, note_name: "All My Pass", note_content: "345gasd3q" },
+//         { note_id: 2, note_name: "Instagram", note_content: "345gasd3q" },
+//         { note_id: 3, note_name: "Facebook", note_content: "345gasd3q" },
+//       ],
+//     },
+//     {
+//       folder_name: "Passwords",
+//       folder_id: 2,
+//       notes: [
+//         { note_id: 1, note_name: "All My Pass", note_content: "345gasd3q" },
+//         { note_id: 2, note_name: "Instagram", note_content: "345gasd3q" },
+//         { note_id: 3, note_name: "Facebook", note_content: "345gasd3q" },
+//         { note_id: 5, note_name: "Instagram", note_content: "345gasd3q" },
+//         { note_id: 6, note_name: "Facebook", note_content: "345gasd3q" },
+//       ],
+//     },
+//     {
+//       folder_name: "Personal",
+//       folder_id: 3,
+//       notes: [
+//         { note_id: 1, note_name: "PersonalOne", note_content: "345gasd3q" },
+//         { note_id: 2, note_name: "PersonalTwo", note_content: "345gasd3q" },
+//         { note_id: 3, note_name: "PersonalThree", note_content: "345gasd3q" },
+//       ],
+//     },
+//   ],
+// };
 
 {
   /* <Stack.Screen name="Folders" component={FoldersDisplay} />

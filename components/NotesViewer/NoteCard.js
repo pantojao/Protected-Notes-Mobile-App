@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { View, Vibration } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Card, Modal, Portal, Text } from "react-native-paper";
 import styles from "./NotesDisplayStyles";
 import * as Haptics from "expo-haptics";
 
-const NotesCard = ({ note, folderId }) => {
+const NotesCard = ({ noteId, note, folderId }) => {
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
   const showModal = () => {
@@ -17,7 +16,7 @@ const NotesCard = ({ note, folderId }) => {
   const openNotePad = () => {
     Haptics.selectionAsync();
     navigation.navigate("NotePad", {
-      noteId: note.note_id,
+      noteId: noteId,
       folderId: folderId,
       name: note.note_name,
     });

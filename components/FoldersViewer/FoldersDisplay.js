@@ -11,9 +11,10 @@ import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
 import styles from "./FolderStyles";
 import * as Haptics from "expo-haptics";
+import {getData} from '../../GetData'
 
 const FoldersDisplay = ({ navigation }) => {
-  const { folders, setFolders } = useContext(UserNotes);
+  const { userData, setUserData } = useContext(UserNotes);
   const [currentDisplay, setCurrentDisplay] = useState(null);
   const [visible, setVisible] = useState(false);
   const [newFolder, setNewFolder] = useState("");
@@ -33,31 +34,38 @@ const FoldersDisplay = ({ navigation }) => {
   }, [navigation]);
 
   useEffect(() => {
-    if (!folders) return;
-    let display = folders.folders;
+    if (!userData) return;
+    let display = userData.folders;
     let searchString = search.trim().toLowerCase();
-    if (!searchString.length) setCurrentDisplay(display);
-    if (searchString.length) {
-      display = display.filter((folder) =>
-        folder.name.toLowerCase().match(searchString)
-      );
+
+    if (!searchString.length) {
       setCurrentDisplay(display);
+      return;
     }
+
+    display = display.filter((folder) =>
+      folder.name.toLowerCase().match(searchString)
+    );
+    setCurrentDisplay(display);
   }, [search]);
 
   useEffect(() => {
-    if (!folders) return;
-    setCurrentDisplay(folders.folders);
-    console.log(folders)
-  }, [folders]);
+    if (userData) setCurrentDisplay(userData.folders);
 
+  }, [userData]);
 
   const showDialog = () => {
     Haptics.selectionAsync();
     setVisible(true);
   };
 
-  const addFolder = () => {
+  const addFolder = async() => {
+    await userData["user_reference"].collection("Folders").add({
+      name: newFolder,
+      notes: {}
+    })
+    
+    await getData(userData, setUserData)
     hideDialog();
   };
 

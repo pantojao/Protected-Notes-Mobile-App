@@ -7,7 +7,7 @@ import * as Haptics from 'expo-haptics';
 const Folder = ({folder}) => {
     const navigation = useNavigation();
 
-    console.log(folder)
+
     const goToFolder = () => {
         Haptics.selectionAsync()
         navigation.navigate('NotesDisplay', {

@@ -1,34 +1,50 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "./NotePadStyles";
 import { UserNotes } from "../../UserNotes";
+import { useIsFocused } from "@react-navigation/native";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 
 const NotePad = ({ route, navigation }) => {
   const { userData, setUserData } = useContext(UserNotes);
-  const [note, setNote] = useState(null);
-  const [noteName, setNoteName] = useState(null);
   const [noteContent, setNoteContent] = useState(null);
   const [editing, setEditing] = useState(false);
+  const isFocused = useIsFocused();
 
   React.useLayoutEffect(() => {
-    const currentNote = userData.folders.find(
-      (folder) => folder.folder_id === route.params.folderId
-    )["notes"][route.params.noteId];
-    
-    console.log(currentNote, "This is the current note");
-    setNote(currentNote);
-    setNoteName(currentNote.note_name);
-    setNoteContent(currentNote.note_content);
-
     navigation.setOptions({
       title: route.params.name,
       headerRight: () => <Button onPress={() => saveContent()} title="Done" />,
     });
   }, [navigation]);
 
-  const saveContent = () => {
-    if (noteContent === null || note) return;
+  useEffect(() => {
+    if (!userData) return;
+    const currentNote = userData.folders.find(
+      (folder) => folder.folder_id === route.params.folderId
+    )["notes"][route.params.noteId];
+
+    if (noteContent === null) setNoteContent("")
+    else setNoteContent(currentNote.note_content);
+    console.log(currentNote.note_content);
+  }, [isFocused]);
+
+  const saveContent = async () => {
+    console.log(noteContent, "clicked");
+    if (noteContent == null) return;
+
+    const path = `notes.${[route.params.noteId]}.note_content`;
+    await userData["user_reference"]
+      .collection("Folders")
+      .doc(route.params.folderId)
+      .update({
+        [path]: noteContent,
+      });
   };
+
+  const onChangeText = (text) => {
+    console.log(text);
+    setNoteContent(text)
+  }
 
   return (
     <View style={styles.notesView}>
@@ -37,7 +53,7 @@ const NotePad = ({ route, navigation }) => {
           style={styles.textInput}
           multiline={true}
           placeholder="Type here"
-          onChangeText={(text) => setNoteContent(text)}
+          onChangeText={(text) =>{onChangeText(text)}}
           defaultValue={noteContent}
         />
       ) : (

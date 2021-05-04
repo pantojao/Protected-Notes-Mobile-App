@@ -10,10 +10,11 @@ import {
 import * as Haptics from "expo-haptics";
 import styles from "./NotesDisplayStyles";
 import NoteCard from "./NoteCard";
+import {getData} from '../../GetData'
 import { UserNotes } from "../../UserNotes";
 
 const NotesDisplay = ({ route, navigation }) => {
-  const { userData } = useContext(UserNotes);
+  const { userData, setUserData } = useContext(UserNotes);
   const [currentFolder, setCurrentFolder] = useState(null);
   const [currentDisplay, setCurrentDisplay] = useState(null);
   const [newNote, setNewNote] = useState("");
@@ -21,12 +22,6 @@ const NotesDisplay = ({ route, navigation }) => {
   const [visible, setVisible] = useState(false);
 
   React.useLayoutEffect(() => {
-    const current = userData.folders.find(
-      (folder) => folder.folder_id === route.params.folderId
-    );
-    setCurrentFolder(current);
-    setCurrentDisplay(Object.entries(current.notes));
-    
     navigation.setOptions({
       headerRight: () => (
         <Button
@@ -39,6 +34,15 @@ const NotesDisplay = ({ route, navigation }) => {
       title: route.params.name,
     });
   }, [navigation]);
+
+  useEffect(() => {
+    const current = userData.folders.find(
+      (folder) => folder.folder_id === route.params.folderId
+    );
+    setCurrentFolder(current);
+    setCurrentDisplay(Object.entries(current.notes));
+  }, [userData]);
+
 
   useEffect(() => {
     if (currentFolder === null) return;
@@ -62,9 +66,16 @@ const NotesDisplay = ({ route, navigation }) => {
     setVisible(true);
   };
 
-  const addNote = () => {
-    console.log(newNote);
+  const addNote = async() => {
+    const newNoteId = Math.floor((Math.random() * 1000000) + 1);
+    const noteHolder = { [newNoteId]: {note_name: newNote, note_content: ""}}
     hideDialog();
+
+    await userData["user_reference"].collection("Folders").doc(route.params.folderId).set({
+      "notes": noteHolder
+    },{merge: true})
+    
+    await getData(userData, setUserData)
   };
 
   const hideDialog = () => {

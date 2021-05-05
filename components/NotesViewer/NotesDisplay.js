@@ -10,7 +10,7 @@ import {
 import * as Haptics from "expo-haptics";
 import styles from "./NotesDisplayStyles";
 import NoteCard from "./NoteCard";
-import {getData} from '../../GetData'
+import {addNote} from '../../handleData'
 import { UserNotes } from "../../UserNotes";
 
 const NotesDisplay = ({ route, navigation }) => {
@@ -48,12 +48,10 @@ const NotesDisplay = ({ route, navigation }) => {
     if (currentFolder === null) return;
     let display = Object.entries(currentFolder.notes);
     let searchString = search.trim().toLowerCase();
-
     if (!searchString.length) {
       setCurrentDisplay(display);
       return;
     }
-
     display = display.filter(([key, note]) =>
       note.note_name.toLowerCase().match(searchString)
     );
@@ -66,16 +64,9 @@ const NotesDisplay = ({ route, navigation }) => {
     setVisible(true);
   };
 
-  const addNote = async() => {
-    const newNoteId = Math.floor((Math.random() * 1000000) + 1);
-    const noteHolder = { [newNoteId]: {note_name: newNote, note_content: ""}}
-    hideDialog();
-
-    await userData["user_reference"].collection("Folders").doc(route.params.folderId).set({
-      "notes": noteHolder
-    },{merge: true})
-    
-    await getData(userData, setUserData)
+  const addNewNote = async() => {
+    await addNote(newNote, userData, setUserData)
+    hideDialog()
   };
 
   const hideDialog = () => {
@@ -83,6 +74,8 @@ const NotesDisplay = ({ route, navigation }) => {
     setNewNote("");
   };
 
+
+  
   return (
     <>
       <Portal>
@@ -98,7 +91,7 @@ const NotesDisplay = ({ route, navigation }) => {
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={addNote}>Done</Button>
+            <Button onPress={() => addNewNote(newNote)}>Done</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

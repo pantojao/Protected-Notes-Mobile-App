@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/core";
-import { Card, Modal, Portal, Text } from "react-native-paper";
+import { Card, Modal, Portal, Text, Button } from "react-native-paper";
 import styles from "./NotesDisplayStyles";
 import * as Haptics from "expo-haptics";
+import { UserNotes } from "../../UserNotes";
+import {deleteNote} from "../../handleData"
 
 const NotesCard = ({ noteId, note, folderId }) => {
   const [visible, setVisible] = useState(false);
+  const {userData, setUserData} = useContext(UserNotes)
   const navigation = useNavigation();
+
   const showModal = () => {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setVisible(true);
   };
-  const hideModal = () => setVisible(false);
 
+  const hideModal = () => setVisible(false);
   const openNotePad = () => {
     Haptics.selectionAsync();
     navigation.navigate("NotePad", {
@@ -22,15 +26,19 @@ const NotesCard = ({ noteId, note, folderId }) => {
     });
   };
 
+  const deleteThis = async () => {
+    await deleteNote(noteId, folderId, userData, setUserData)
+    hideModal()
+  }
+
   return (
     <>
       <Portal>
-        <Modal
-          visible={visible}
-          onDismiss={hideModal}
-          contentContainerStyle={styles.containerStyle}
-        >
-          <Text>{note.note_content}</Text>
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
+          <Button>Edit Name</Button>
+          <Button>Move Note</Button>
+          <Button onPress={deleteThis} >Delete Note</Button>
+
         </Modal>
       </Portal>
 

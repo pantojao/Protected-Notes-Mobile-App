@@ -11,7 +11,7 @@ import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
 import styles from "./FolderStyles";
 import * as Haptics from "expo-haptics";
-import {getData} from '../../GetData'
+import {addFolder} from '../../handleData'
 
 const FoldersDisplay = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserNotes);
@@ -51,7 +51,6 @@ const FoldersDisplay = ({ navigation }) => {
 
   useEffect(() => {
     if (userData) setCurrentDisplay(userData.folders);
-
   }, [userData]);
 
   const showDialog = () => {
@@ -59,13 +58,8 @@ const FoldersDisplay = ({ navigation }) => {
     setVisible(true);
   };
 
-  const addFolder = async() => {
-    await userData["user_reference"].collection("Folders").add({
-      name: newFolder,
-      notes: {}
-    })
-    
-    await getData(userData, setUserData)
+  const addNewFolder = async() => {
+    await addFolder(newFolder, userData, setUserData)
     hideDialog();
   };
 
@@ -96,7 +90,7 @@ const FoldersDisplay = ({ navigation }) => {
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={addFolder}>Done</Button>
+            <Button onPress={addNewFolder}>Done</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

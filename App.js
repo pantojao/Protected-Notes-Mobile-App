@@ -9,7 +9,7 @@ import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import { UserNotes } from "./UserNotes";
 import * as firebase from "firebase";
-import {getData} from './GetData'
+import {getData} from './handleData'
 const Stack = createStackNavigator();
 
 
@@ -23,9 +23,8 @@ export default function App() {
         setLoggedIn(false);
         return;
       }
-
       setLoggedIn(true);
-      getData(userData, setUserData);
+      getData(setUserData);
     });
   }, []);
 

@@ -56,12 +56,12 @@ export const deleteFolder = async(folderId, userData, setUserData) => {
   await getData(setUserData);
 };
 
-export const addNote = async (noteName, userData, setUserData) => {
+export const addNote = async (noteName,folderId ,userData, setUserData) => {
   const newNoteId = Math.floor(Math.random() * 1000000 + 1);
   const noteHolder = { [newNoteId]: { note_name: noteName, note_content: "" } };
   await userData["user_reference"]
     .collection("Folders")
-    .doc(route.params.folderId)
+    .doc(folderId)
     .set(
       {
         notes: noteHolder,
@@ -77,4 +77,18 @@ export const addFolder = async (folderName, userData, setUserData) => {
     notes: {},
   });
   await getData(setUserData);
+};
+
+
+
+export const changeNoteName = async (newName, noteId, folderId, userData, setUserData) => {
+  console.log("delete");
+  const path = "notes." + noteId + ".note_name";
+  await userData["user_reference"]
+    .collection("Folders")
+    .doc(folderId)
+    .update({
+      [path]: newName,
+    });
+  getData(setUserData);
 };

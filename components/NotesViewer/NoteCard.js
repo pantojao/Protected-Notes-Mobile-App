@@ -4,7 +4,8 @@ import { Card, Modal, Portal, Text, Button } from "react-native-paper";
 import styles from "./NotesDisplayStyles";
 import * as Haptics from "expo-haptics";
 import { UserNotes } from "../../UserNotes";
-import {deleteNote} from "../../handleData"
+import {deleteNote, changeNoteName} from "../../handleData"
+import { NoteOptions } from "./NotePortals";
 
 const NotesCard = ({ noteId, note, folderId }) => {
   const [visible, setVisible] = useState(false);
@@ -31,16 +32,19 @@ const NotesCard = ({ noteId, note, folderId }) => {
     hideModal()
   }
 
+  const editNoteName = async(newName) => {
+    console.log(newName)
+    changeNoteName(newName, noteId, folderId, userData, setUserData)
+    hideModal()
+  }
+
+  const moveNote = async() => {
+
+  }
+
   return (
     <>
-      <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
-          <Button>Edit Name</Button>
-          <Button>Move Note</Button>
-          <Button onPress={deleteThis} >Delete Note</Button>
-
-        </Modal>
-      </Portal>
+      {visible && <NoteOptions hideModal={hideModal} editNoteName={editNoteName} deleteThis={deleteThis} moveNote={moveNote} />}
 
       <Card
         style={styles.noteCard}

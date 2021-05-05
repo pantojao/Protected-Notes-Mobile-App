@@ -1,23 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View } from "react-native";
-import {
-  TextInput,
-  Button,
-  Paragraph,
-  Dialog,
-  Portal,
-} from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
+import {NewNotePortal} from './NotePortals'
 import * as Haptics from "expo-haptics";
 import styles from "./NotesDisplayStyles";
 import NoteCard from "./NoteCard";
-import {addNote} from '../../handleData'
+import { addNote } from "../../handleData";
 import { UserNotes } from "../../UserNotes";
 
 const NotesDisplay = ({ route, navigation }) => {
   const { userData, setUserData } = useContext(UserNotes);
   const [currentFolder, setCurrentFolder] = useState(null);
   const [currentDisplay, setCurrentDisplay] = useState(null);
-  const [newNote, setNewNote] = useState("");
   const [search, setSearch] = useState("");
   const [visible, setVisible] = useState(false);
 
@@ -43,20 +37,17 @@ const NotesDisplay = ({ route, navigation }) => {
     setCurrentDisplay(Object.entries(current.notes));
   }, [userData]);
 
-
   useEffect(() => {
     if (currentFolder === null) return;
     let display = Object.entries(currentFolder.notes);
     let searchString = search.trim().toLowerCase();
     if (!searchString.length) {
-      setCurrentDisplay(display);
-      return;
+      return setCurrentDisplay(display);
     }
     display = display.filter(([key, note]) =>
       note.note_name.toLowerCase().match(searchString)
     );
     setCurrentDisplay(display);
-
   }, [search]);
 
   const showDialog = () => {
@@ -64,9 +55,9 @@ const NotesDisplay = ({ route, navigation }) => {
     setVisible(true);
   };
 
-  const addNewNote = async() => {
-    await addNote(newNote, userData, setUserData)
-    hideDialog()
+  const addNewNote = async (newNote) => {
+    await addNote(newNote, route.params.folderId, userData, setUserData);
+    hideDialog();
   };
 
   const hideDialog = () => {
@@ -74,28 +65,9 @@ const NotesDisplay = ({ route, navigation }) => {
     setNewNote("");
   };
 
-
-  
   return (
     <>
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>New Note</Dialog.Title>
-          <Dialog.Content>
-            <Paragraph>Enter name for your new note.</Paragraph>
-            <TextInput
-              label="Search"
-              value={newNote}
-              onChangeText={(text) => setNewNote(text)}
-            />
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={() => addNewNote(newNote)}>Done</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
-
+      {visible && <NewNotePortal addNewNote = {addNewNote} hideDialog={hideDialog} />}
       <TextInput
         label="Search"
         style={styles.searchbar}

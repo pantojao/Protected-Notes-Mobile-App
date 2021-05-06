@@ -29,6 +29,13 @@ const styles = StyleSheet.create({
   },
   editNoteName:{
     height: 250
+  }, 
+  portalOptionsTitle: {
+    fontSize: 15, marginBottom: 15
+  }, 
+  noteOptionsBtns: {
+    width: 175,
+    marginVertical: 10
   }
 
 });

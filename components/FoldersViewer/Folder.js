@@ -8,59 +8,46 @@ import { UserNotes } from "../../UserNotes";
 import { FolderOptions } from "./FolderPortals";
 
 const Folder = ({ folder }) => {
-  const navigation = useNavigation();
-  const [visible, setVisible] = useState(false);
-  const { userData, setUserData } = useContext(UserNotes);
+	const navigation = useNavigation();
+	const [visible, setVisible] = useState(false);
+	const { userData, setUserData } = useContext(UserNotes);
 
-  const showModal = () => {
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    setVisible(true);
-  };
+	const showModal = () => {
+		Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+		setVisible(true);
+	};
 
-  const hideModal = () => setVisible(false);
+	const hideModal = () => setVisible(false);
 
-  const deleteThis = async () => {
-    await deleteFolder(folder.folder_id, userData, setUserData);
-    hideModal();
-  };
+	const deleteThis = async () => {
+		await deleteFolder(folder.folder_id, userData, setUserData);
+		hideModal();
+	};
 
-  const renameFolder = async (newName) => {
-    await changeFolderName(folder.folder_id, newName, userData, setUserData);
-    hideModal();
-  };
+	const renameFolder = async (newName) => {
+		await changeFolderName(folder.folder_id, newName, userData, setUserData);
+		hideModal();
+	};
 
-  const goToFolder = () => {
-    Haptics.selectionAsync();
-    navigation.navigate("NotesDisplay", {
-      folderId: folder.folder_id,
-      name: folder.folder_name,
-    });
-  };
+	const goToFolder = () => {
+		Haptics.selectionAsync();
+		navigation.navigate("NotesDisplay", {
+			folderId: folder.folder_id,
+			name: folder.folder_name,
+		});
+	};
 
-  return (
-    <>
-      {visible && (
-        <FolderOptions
-          folder={folder}
-          renameFolder={renameFolder}
-          deleteThis={deleteThis}
-          hideModal={hideModal}
-        />
-      )}
+	return (
+		<>
+			{visible && (
+				<FolderOptions folder={folder} renameFolder={renameFolder} deleteThis={deleteThis} hideModal={hideModal} />
+			)}
 
-      <Card
-        elevation={2}
-        style={styles.folderItem}
-        onLongPress={showModal}
-        onPress={goToFolder}
-      >
-        <Card.Title
-          title={folder.folder_name}
-          right={() => <List.Icon icon="arrow-right" />}
-        />
-      </Card>
-    </>
-  );
+			<Card elevation={2} style={styles.folderItem} onLongPress={showModal} onPress={goToFolder}>
+				<Card.Title title={folder.folder_name} right={() => <List.Icon icon="arrow-right" />} />
+			</Card>
+		</>
+	);
 };
 
 export default Folder;

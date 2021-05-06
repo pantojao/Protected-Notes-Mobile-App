@@ -4,7 +4,7 @@ import { Card, Modal, Portal, Text, Button } from "react-native-paper";
 import styles from "./NotesDisplayStyles";
 import * as Haptics from "expo-haptics";
 import { UserNotes } from "../../UserNotes";
-import {deleteNote, changeNoteName} from "../../handleData"
+import {moveNote, deleteNote, changeNoteName} from "../../handleData"
 import { NoteOptions } from "./NotePortals";
 
 const NotesCard = ({ noteId, note, folderId }) => {
@@ -38,13 +38,14 @@ const NotesCard = ({ noteId, note, folderId }) => {
     hideModal()
   }
 
-  const moveNote = async() => {
-
+  const moveThisNote = async(folderDesination) => {
+    await moveNote(note, noteId, folderId, folderDesination, userData, setUserData)
+    hideModal()
   }
 
   return (
     <>
-      {visible && <NoteOptions hideModal={hideModal} editNoteName={editNoteName} deleteThis={deleteThis} moveNote={moveNote} />}
+      {visible && <NoteOptions noteName={note.note_name} hideModal={hideModal} editNoteName={editNoteName} deleteThis={deleteThis} moveNote={moveThisNote} />}
 
       <Card
         style={styles.noteCard}

@@ -49,25 +49,22 @@ export const deleteNote = async (noteId, folderId, userData, setUserData) => {
   getData(setUserData);
 };
 
-export const deleteFolder = async(folderId, userData, setUserData) => {
+export const deleteFolder = async (folderId, userData, setUserData) => {
   console.log("delete");
-  console.log(folderId)
+  console.log(folderId);
   await userData["user_reference"].collection("Folders").doc(folderId).delete();
   await getData(setUserData);
 };
 
-export const addNote = async (noteName,folderId ,userData, setUserData) => {
+export const addNote = async (noteName, folderId, userData, setUserData) => {
   const newNoteId = Math.floor(Math.random() * 1000000 + 1);
   const noteHolder = { [newNoteId]: { note_name: noteName, note_content: "" } };
-  await userData["user_reference"]
-    .collection("Folders")
-    .doc(folderId)
-    .set(
-      {
-        notes: noteHolder,
-      },
-      { merge: true }
-    );
+  await userData["user_reference"].collection("Folders").doc(folderId).set(
+    {
+      notes: noteHolder,
+    },
+    { merge: true }
+  );
   await getData(setUserData);
 };
 
@@ -79,9 +76,13 @@ export const addFolder = async (folderName, userData, setUserData) => {
   await getData(setUserData);
 };
 
-
-
-export const changeNoteName = async (newName, noteId, folderId, userData, setUserData) => {
+export const changeNoteName = async (
+  newName,
+  noteId,
+  folderId,
+  userData,
+  setUserData
+) => {
   console.log("delete");
   const path = "notes." + noteId + ".note_name";
   await userData["user_reference"]
@@ -91,4 +92,29 @@ export const changeNoteName = async (newName, noteId, folderId, userData, setUse
       [path]: newName,
     });
   getData(setUserData);
+};
+
+export const moveNote = async (
+  note,
+  noteId,
+  currentFolderId,
+  destinationFolderId,
+  userData,
+  setUserData
+) => {
+  if (currentFolderId === destinationFolderId) return;
+  const noteHolder = {[noteId]: note}
+  await userData["user_reference"]
+    .collection("Folders")
+    .doc(destinationFolderId)
+    .set(
+      {
+        notes: noteHolder,
+      },
+      { merge: true }
+    );
+
+  await deleteNote(noteId, currentFolderId, userData, setUserData);
+
+  await getData(setUserData);
 };

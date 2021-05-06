@@ -21,12 +21,13 @@ const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: "white",
     padding: 20,
-    height: "80%",
-    width: "80%",
+    height: "40%",
+    width: "70%",
     justifyContent: "center", 
     alignItems: "center", 
     alignSelf: "center",
   },
+
 
 });
 

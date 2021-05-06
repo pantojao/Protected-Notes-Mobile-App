@@ -62,7 +62,6 @@ const NotesDisplay = ({ route, navigation }) => {
 
   const hideDialog = () => {
     setVisible(false);
-    setNewNote("");
   };
 
   return (

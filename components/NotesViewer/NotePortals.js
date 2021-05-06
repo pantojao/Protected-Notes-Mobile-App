@@ -97,7 +97,7 @@ const EditNamePortal = ({ editNoteName, hideEditMenu }) => {
 
   return (
     <Portal>
-      <Dialog visible={true} onDismiss={hideEditMenu}>
+      <Dialog visible={true} onDismiss={hideEditMenu} style={styles.editNoteName}>
         <Dialog.Title>Change Note Name</Dialog.Title>
         <Dialog.Content>
           <Paragraph>Enter New Name</Paragraph>

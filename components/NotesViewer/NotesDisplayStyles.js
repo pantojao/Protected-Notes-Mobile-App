@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
     alignItems: "center", 
     alignSelf: "center",
   },
-
+  editNoteName:{
+    height: 250
+  }
 
 });
 

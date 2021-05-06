@@ -1,23 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
 import { View } from "react-native";
-import {
-  TextInput,
-  Button,
-  Paragraph,
-  Dialog,
-  Portal,
-} from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
 import styles from "./FolderStyles";
 import * as Haptics from "expo-haptics";
-import {addFolder} from '../../handleData'
+import { addFolder } from "../../handleData";
+import { AddFolderPortal } from "./FolderPortals";
 
 const FoldersDisplay = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserNotes);
   const [currentDisplay, setCurrentDisplay] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [newFolder, setNewFolder] = useState("");
   const [search, setSearch] = useState("");
 
   React.useLayoutEffect(() => {
@@ -58,14 +52,13 @@ const FoldersDisplay = ({ navigation }) => {
     setVisible(true);
   };
 
-  const addNewFolder = async() => {
-    await addFolder(newFolder, userData, setUserData)
+  const addNewFolder = async (newFolder) => {
+    await addFolder(newFolder, userData, setUserData);
     hideDialog();
   };
 
   const hideDialog = () => {
     setVisible(false);
-    setNewFolder("");
   };
 
   return (
@@ -77,23 +70,9 @@ const FoldersDisplay = ({ navigation }) => {
         style={styles.searchbar}
       />
 
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>New Folder</Dialog.Title>
-          <Dialog.Content>
-            <Paragraph>Enter name for your new folder.</Paragraph>
-            <TextInput
-              label="Search"
-              value={newFolder}
-              onChangeText={(text) => setNewFolder(text)}
-            />
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={addNewFolder}>Done</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      {visible && (
+        <AddFolderPortal addNewFolder={addNewFolder} hideDialog={hideDialog} />
+      )}
 
       {currentDisplay && (
         <View style={styles.folderDisplay}>

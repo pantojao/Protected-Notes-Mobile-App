@@ -33,7 +33,17 @@ const styles = StyleSheet.create({
         alignItems: "center", 
         alignSelf: "center",
       },
-
+      portalName: {
+        fontSize: 20, 
+        marginVertical: 10
+      }, 
+      portalActions: {
+        width: 175, 
+        marginVertical: 20
+      }, 
+      nameFolder: {
+         height: 230
+      }
 })
 
 export default styles

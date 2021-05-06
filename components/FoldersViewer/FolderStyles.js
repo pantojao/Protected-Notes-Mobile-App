@@ -24,6 +24,15 @@ const styles = StyleSheet.create({
         alignSelf: 'center', 
         marginVertical: 10
     },
+    containerStyle: {
+        backgroundColor: "white",
+        padding: 20,
+        height: "30%",
+        width: "70%",
+        justifyContent: "space-evenly", 
+        alignItems: "center", 
+        alignSelf: "center",
+      },
 
 })
 

@@ -115,6 +115,16 @@ export const moveNote = async (
     );
 
   await deleteNote(noteId, currentFolderId, userData, setUserData);
-
   await getData(setUserData);
 };
+
+
+export const changeFolderName = async (folderId, newName, userData,setUserData) => {
+  await userData["user_reference"]
+    .collection("Folders")
+    .doc(folderId)
+    .update({
+      name: newName
+    });
+  await getData(setUserData);
+}

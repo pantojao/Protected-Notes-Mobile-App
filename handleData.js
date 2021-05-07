@@ -128,3 +128,21 @@ export const changeFolderName = async (folderId, newName, userData,setUserData) 
     });
   await getData(setUserData);
 }
+
+
+export const saveNoteContent = async (noteContent, noteId, folderId, userData, setUserData) =>{
+  if (noteContent == null) return;
+  const path = 'notes.' + noteId + '.note_content';
+
+  console.log(path, folderId)
+  console.log(noteContent)
+  const result = await userData["user_reference"]
+    .collection("Folders")
+    .doc(folderId)
+    .update({
+      [path]: noteContent,
+    });
+
+    console.log(result)
+    await getData(setUserData);
+}

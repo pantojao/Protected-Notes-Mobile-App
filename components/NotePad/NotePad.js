@@ -1,71 +1,60 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import styles from "./NotePadStyles";
 import { UserNotes } from "../../UserNotes";
-import { useIsFocused } from "@react-navigation/native";
-import { Text, View, TextInput, Button, StyleSheet } from "react-native";
-import { getData } from "../../handleData";
+import { TextInput, Button, ScrollView } from "react-native";
+import { saveNoteContent } from "../../handleData";
 
 const NotePad = ({ route, navigation }) => {
-  const { userData, setUserData } = useContext(UserNotes);
-  const [noteContent, setNoteContent] = useState(null);
-  const [editing, setEditing] = useState(false);
-  const isFocused = useIsFocused();
+	const { userData, setUserData } = useContext(UserNotes);
+	const [noteContent, setNoteContent] = useState(null);
+	const [editing, setEditing] = useState(false);
+	const textInput = useRef(null);
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      title: route.params.name,
-    });
-  }, [navigation]);
+	const ActionButton = () => {
+		return editing ? (
+			<Button onPress={saveContent} title="Done" />
+		) : (
+			<Button onPress={() => setEditing(true)} title="Edit" />
+		);
+	};
 
-  useEffect(() => {
-    if (!userData) return;
+	React.useLayoutEffect(() => {
+		navigation.setOptions({
+			title: route.params.name,
+			headerRight: () => <ActionButton />,
+		});
+	}, [navigation, editing, noteContent]);
 
-    const currentNote = userData.folders.find(
-      (folder) => folder.folder_id === route.params.folderId
-    )["notes"][route.params.noteId];
+	useEffect(() => {
+		if (!userData) return;
+		const currentNote = userData.folders.find((folder) => folder.folder_id === route.params.folderId)["notes"][
+			route.params.noteId
+		];
+		setNoteContent(currentNote.note_content);
+	}, []);
 
-    setNoteContent(currentNote.note_content);
-    console.log(currentNote.note_content);
-  }, [isFocused]);
+	const saveContent = async () => {
+		await saveNoteContent(noteContent, route.params.noteId, route.params.folderId, userData, setUserData);
+		setEditing(false);
+	};
 
+	useEffect(() => {
+		if (editing) textInput.current.focus();
+	}, [editing]);
 
-  const saveContent = async() => {
-    if (noteContent == null) return;
-
-    const path = `notes.${[route.params.noteId]}.note_content`;
-    await userData["user_reference"]
-      .collection("Folders")
-      .doc(route.params.folderId)
-      .update({
-        [path]: noteContent,
-      });
-    
-    setEditing(false)
-    getData(setUserData)
-  };
-
-  const onChangeText = (text) => {
-    setNoteContent(text)
-  }
-
-  return (
-    <View style={styles.notesView}>
-      {editing && <Button onPress={() => saveContent(false)} title="Done" />} 
-      {editing ? (
-        <TextInput
-          style={styles.textInput}
-          multiline={true}
-          placeholder="Type here"
-          onChangeText={(text) =>onChangeText(text)}
-          defaultValue={noteContent}
-        />
-      ) : (
-        <Text style={styles.noteContent} onPress={() => setEditing(!editing)}>
-          {noteContent}
-        </Text>
-      )}
-    </View>
-  );
+	return (
+		<ScrollView style={styles.notesView}>
+			<TextInput
+				style={styles.textInput}
+				multiline={true}
+				placeholder="Type here"
+				onChangeText={(text) => setNoteContent(text)}
+				defaultValue={noteContent}
+				editable={editing}
+				ref={textInput}
+			/>
+		</ScrollView>
+	);
 };
 
 export default NotePad;

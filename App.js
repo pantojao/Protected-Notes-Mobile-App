@@ -52,7 +52,7 @@ export default function App() {
             <Stack.Screen
               name="NotePad"
               component={NotePad}
-              options={{ headerBackTitleVisible: false }}
+              options={{ headerBackTitleVisible: true }}
             />
           </Stack.Navigator>
         </NavigationContainer>

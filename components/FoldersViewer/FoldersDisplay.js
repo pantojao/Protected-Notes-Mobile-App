@@ -17,6 +17,7 @@ const FoldersDisplay = ({ navigation }) => {
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => <Button icon="plus" mode="text" labelStyle={{ fontSize: 25 }} onPress={showDialog} />,
+			headerLeft: () => <Button icon="account-settings" mode="text" labelStyle={{ fontSize: 25 }} onPress={() => navigation.navigate('Settings')}/>
 		});
 	}, [navigation]);
 

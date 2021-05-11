@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
@@ -21,19 +21,18 @@ const FoldersDisplay = ({ navigation }) => {
 		});
 	}, [navigation]);
 
-	useEffect(() => {
-		if (!userData) return;
-		let display = userData.folders;
-		let searchString = search.trim().toLowerCase();
+	// useEffect(() => {
+	// 	if (!userData) return;
+	// 	let display = userData.folders;
+	// 	let searchString = search.trim().toLowerCase();
 
-		if (!searchString.length) {
-			setCurrentDisplay(display);
-			return;
-		}
-
-		display = display.filter((folder) => folder.folder_name.toLowerCase().match(searchString));
-		setCurrentDisplay(display);
-	}, [search]);
+	// 	if (!searchString.length) {
+	// 		setCurrentDisplay(display);
+	// 		return;
+	// 	}
+	// 	display = display.filter((folder) => folder.folder_name.toLowerCase().match(searchString));
+	// 	setCurrentDisplay(display);
+	// }, [search]);
 
 	useEffect(() => {
 		if (userData) setCurrentDisplay(userData.folders);
@@ -52,13 +51,11 @@ const FoldersDisplay = ({ navigation }) => {
 	const hideDialog = () => {
 		setVisible(false);
 	};
-
+	console.log(currentDisplay, "This is the current display")
 	return (
-		<>
+		<ScrollView>
 			<TextInput label="Search" value={search} onChangeText={(text) => setSearch(text)} style={styles.searchbar} />
-
 			{visible && <AddFolderPortal addNewFolder={addNewFolder} hideDialog={hideDialog} />}
-
 			{currentDisplay && (
 				<View style={styles.folderDisplay}>
 					{currentDisplay.map((folder) => (
@@ -66,7 +63,7 @@ const FoldersDisplay = ({ navigation }) => {
 					))}
 				</View>
 			)}
-		</>
+		</ScrollView>
 	);
 };
 

@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyD8ZvWx_uMqFy7RV1cPiGyucWcHG2uAIVw",
   authDomain: "passwordnotes-8c7df.firebaseapp.com",
   projectId: "passwordnotes-8c7df",
@@ -12,13 +12,16 @@ var firebaseConfig = {
 if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-export const getData = async (setUserData) => {
-  const data = { folders: [] };
-  try {
-    const docRef = db.collection("users").doc("FAsiWsTTogRLES4FfNfUYCDKOTA3");
-    const doc = await docRef.get();
-    const folders = await doc.ref.collection("Folders").get();
 
+
+export const getData = async (userData, setUserData) => {
+
+  let data = userData;
+  data["folders"] = []
+
+  try {
+    const folders = await userData["user_reference"].collection("Folders").get();
+   
     folders.forEach((folder) => {
       const folderData = folder.data();
       const currentFolder = {
@@ -28,14 +31,23 @@ export const getData = async (setUserData) => {
       };
       data.folders.push(currentFolder);
     });
-
-    data["user_reference"] = doc.ref;
-
     setUserData(data);
+    console.log("loaded data")
   } catch (error) {
     console.log("Error getting document:", error);
   }
 };
+
+export const getUser = async (userData, setUserData) => {
+  let data = {}
+  const userID = firebase.auth().currentUser.uid
+  const docRef = db.collection("users").doc(userID);
+  const doc = await docRef.get();
+
+  data["user_reference"] = doc.ref;
+  await getData(data, setUserData)
+}
+
 
 export const deleteNote = async (noteId, folderId, userData, setUserData) => {
   console.log("delete");
@@ -46,14 +58,14 @@ export const deleteNote = async (noteId, folderId, userData, setUserData) => {
     .update({
       [path]: firebase.firestore.FieldValue.delete(),
     });
-  getData(setUserData);
+  getData(userData, setUserData);
 };
 
 export const deleteFolder = async (folderId, userData, setUserData) => {
   console.log("delete");
   console.log(folderId);
   await userData["user_reference"].collection("Folders").doc(folderId).delete();
-  await getData(setUserData);
+  await getData(userData, setUserData);
 };
 
 export const addNote = async (noteName, folderId, userData, setUserData) => {
@@ -65,7 +77,7 @@ export const addNote = async (noteName, folderId, userData, setUserData) => {
     },
     { merge: true }
   );
-  await getData(setUserData);
+  await getData(userData, setUserData);
 };
 
 export const addFolder = async (folderName, userData, setUserData) => {
@@ -73,7 +85,7 @@ export const addFolder = async (folderName, userData, setUserData) => {
     name: folderName,
     notes: {},
   });
-  await getData(setUserData);
+  await getData(userData, setUserData);
 };
 
 export const changeNoteName = async (
@@ -83,7 +95,6 @@ export const changeNoteName = async (
   userData,
   setUserData
 ) => {
-  console.log("delete");
   const path = "notes." + noteId + ".note_name";
   await userData["user_reference"]
     .collection("Folders")
@@ -91,7 +102,7 @@ export const changeNoteName = async (
     .update({
       [path]: newName,
     });
-  getData(setUserData);
+  getData(userData, setUserData);
 };
 
 export const moveNote = async (
@@ -115,7 +126,7 @@ export const moveNote = async (
     );
 
   await deleteNote(noteId, currentFolderId, userData, setUserData);
-  await getData(setUserData);
+  await getData(userData, setUserData);
 };
 
 
@@ -126,23 +137,18 @@ export const changeFolderName = async (folderId, newName, userData,setUserData) 
     .update({
       name: newName
     });
-  await getData(setUserData);
+  await getData(userData, setUserData);
 }
 
 
 export const saveNoteContent = async (noteContent, noteId, folderId, userData, setUserData) =>{
   if (noteContent == null) return;
   const path = 'notes.' + noteId + '.note_content';
-
-  console.log(path, folderId)
-  console.log(noteContent)
   const result = await userData["user_reference"]
     .collection("Folders")
     .doc(folderId)
     .update({
       [path]: noteContent,
     });
-
-    console.log(result)
-    await getData(setUserData);
+    await getData(userData, setUserData);
 }

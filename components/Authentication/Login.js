@@ -1,28 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-
+import {UserNotes } from '../../UserNotes'
 import firebase from "firebase";
 
 import { useNavigation } from "@react-navigation/native";
 import styles from "./AuthenticationStyles";
+import { getUser } from "../../handleData";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [emailLabel, setEmailLabel] = useState(null);
 	const [password, setPassword] = useState("");
 	const navigation = useNavigation();
+	const { userData, setUserData } = useContext(UserNotes);
 
 	const signIn = async () => {
 		try {
 			const response = await firebase.auth().signInWithEmailAndPassword(email, password);
+			await getUser(userData, setUserData)
 		} catch (error) {
 			setEmailLabel("Email or password is invalid.");
 		}
 	};
 	const redirectToRegister = (response) => {
 		navigation.navigate("Register");
-	};
+	}; 
 	const removeLabels = () => setEmailLabel(null);
 
 	return (

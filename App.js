@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider as PaperProvider } from "react-native-paper";
-import {Text} from "react-native"
+import { Text } from "react-native";
 import FoldersDisplay from "./components/FoldersViewer/FoldersDisplay";
 import NotesDisplay from "./components/NotesViewer/NotesDisplay";
 import NotePad from "./components/NotePad/NotePad";
@@ -11,23 +11,23 @@ import Register from "./components/Authentication/Register";
 import Settings from "./Settings";
 import { UserNotes } from "./UserNotes";
 import * as firebase from "firebase";
-import { getUser } from "./handleData";
+import { getData } from "./handleData";
 const Stack = createStackNavigator();
 
 export default function App() {
-	const [userData, setUserData] = useState(null);
+	const [userData, setUserData] = useState({ user_reference: null, folders: [] });
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		firebase.auth().onAuthStateChanged(async(user) => {
+		firebase.auth().onAuthStateChanged(async (user) => {
 			if (!user) {
 				setLoggedIn(false);
 				setLoading(false);
 				return;
 			}
-			console.log("Now authorized")
-			getUser(userData, setUserData)
+
+			await getData(userData, setUserData);
 			setLoggedIn(true);
 			setLoading(false);
 		});
@@ -35,7 +35,7 @@ export default function App() {
 
 	const providerValue = useMemo(() => ({ userData, setUserData }), [userData, setUserData]);
 
-	return !loggedIn && !loading  ? (
+	return !loggedIn && !loading ? (
 		<UserNotes.Provider value={providerValue}>
 			<PaperProvider>
 				<NavigationContainer>
@@ -59,5 +59,5 @@ export default function App() {
 				</NavigationContainer>
 			</PaperProvider>
 		</UserNotes.Provider>
-	) 
+	);
 }

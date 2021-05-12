@@ -46,7 +46,6 @@ const FoldersDisplay = ({ navigation }) => {
 
 	useEffect(() => {
 		if (!userData) return  
-		console.log("runing")
 		setCurrentDisplay(userData.folders);
 	}, [userData, setUserData]);
 
@@ -56,8 +55,8 @@ const FoldersDisplay = ({ navigation }) => {
 	};
 
 	const addNewFolder = async (newFolder) => {
-		addFolder(newFolder, userData, setUserData);
 		hideDialog();
+		addFolder(newFolder, userData, setUserData);
 	};
 
 	const hideDialog = () => {

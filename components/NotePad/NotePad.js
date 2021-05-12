@@ -12,9 +12,9 @@ const NotePad = ({ route, navigation }) => {
 
 	const ActionButton = () => {
 		return editing ? (
-			<Button onPress={saveContent} title="Done" />
+			<Button onPress={saveContent} icon="" title="Save" />
 		) : (
-			<Button onPress={() => setEditing(true)} title="Edit" />
+			<Button onPress={() => setEditing(true)} icon="content-save-outline" title="Edit" />
 		);
 	};
 
@@ -34,8 +34,9 @@ const NotePad = ({ route, navigation }) => {
 	}, []);
 
 	const saveContent = async () => {
-		await saveNoteContent(noteContent, route.params.noteId, route.params.folderId, userData, setUserData);
 		setEditing(false);
+		await saveNoteContent(noteContent, route.params.noteId, route.params.folderId, userData, setUserData);
+		
 	};
 
 	useEffect(() => {

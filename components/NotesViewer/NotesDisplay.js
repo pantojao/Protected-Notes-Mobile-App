@@ -45,8 +45,9 @@ const NotesDisplay = ({ route, navigation }) => {
 	};
 
 	const addNewNote = async (newNote) => {
-		await addNote(newNote, route.params.folderId, userData, setUserData);
 		hideDialog();
+		await addNote(newNote, route.params.folderId, userData, setUserData);
+		
 	};
 
 	const hideDialog = () => {

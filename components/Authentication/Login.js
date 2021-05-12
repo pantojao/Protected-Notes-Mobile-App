@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState,  useContext } from "react";
 import { View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import {UserNotes } from '../../UserNotes'
@@ -6,7 +6,7 @@ import firebase from "firebase";
 
 import { useNavigation } from "@react-navigation/native";
 import styles from "./AuthenticationStyles";
-import { getUser } from "../../handleData";
+import { getData } from "../../handleData";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ export default function Login() {
 	const signIn = async () => {
 		try {
 			const response = await firebase.auth().signInWithEmailAndPassword(email, password);
-			await getUser(userData, setUserData)
+			await getData(userData, setUserData)
 		} catch (error) {
 			setEmailLabel("Email or password is invalid.");
 		}

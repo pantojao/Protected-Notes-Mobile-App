@@ -28,19 +28,18 @@ const NotesCard = ({ noteId, note, folderId }) => {
 	};
 
 	const deleteThis = async () => {
-		await deleteNote(noteId, folderId, userData, setUserData);
 		hideModal();
+		await deleteNote(noteId, folderId, userData, setUserData);
 	};
 
 	const editNoteName = async (newName) => {
-		console.log(newName);
-		changeNoteName(newName, noteId, folderId, userData, setUserData);
 		hideModal();
+		changeNoteName(newName, noteId, folderId, userData, setUserData);
 	};
 
 	const moveThisNote = async (folderDesination) => {
-		await moveNote(note, noteId, folderId, folderDesination, userData, setUserData);
 		hideModal();
+		await moveNote(note, noteId, folderId, folderDesination, userData, setUserData);
 	};
 
 	return (

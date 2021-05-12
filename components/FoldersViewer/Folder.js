@@ -20,13 +20,15 @@ const Folder = ({ folder }) => {
 	const hideModal = () => setVisible(false);
 
 	const deleteThis = async () => {
-		await deleteFolder(folder.folder_id, userData, setUserData);
 		hideModal();
+		await deleteFolder(folder.folder_id, userData, setUserData);
+		
 	};
 
 	const renameFolder = async (newName) => {
-		await changeFolderName(folder.folder_id, newName, userData, setUserData);
 		hideModal();
+		await changeFolderName(folder.folder_id, newName, userData, setUserData);
+
 	};
 
 	const goToFolder = () => {

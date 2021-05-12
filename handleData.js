@@ -1,5 +1,4 @@
 import * as firebase from "firebase";
-import React, { useMemo } from "react";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyD8ZvWx_uMqFy7RV1cPiGyucWcHG2uAIVw",
@@ -43,7 +42,6 @@ export const getData = async (userData, setUserData) => {
 };
 
 export const deleteNote = async (noteId, folderId, userData, setUserData) => {
-	console.log("delete");
 	const path = "notes." + noteId;
 	await userData["user_reference"]
 		.collection("Folders")
@@ -75,7 +73,6 @@ export const addFolder = async (folderName, userData, setUserData) => {
 };
 
 export const deleteFolder = async (folderId, userData, setUserData) => {
-	console.log("delete");
 	await userData["user_reference"].collection("Folders").doc(folderId).delete();
 	await getData(userData, setUserData);
 };
@@ -115,7 +112,7 @@ export const changeFolderName = async (folderId, newName, userData, setUserData)
 export const saveNoteContent = async (noteContent, noteId, folderId, userData, setUserData) => {
 	if (noteContent == null) return;
 	const path = "notes." + noteId + ".note_content";
-	const result = await userData["user_reference"]
+	await userData["user_reference"]
 		.collection("Folders")
 		.doc(folderId)
 		.update({

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { NewNotePortal } from "./NotePortals";
 import * as Haptics from "expo-haptics";
@@ -55,7 +55,7 @@ const NotesDisplay = ({ route, navigation }) => {
 	};
 
 	return (
-		<>
+		<ScrollView>
 			{visible && <NewNotePortal addNewNote={addNewNote} hideDialog={hideDialog} />}
 			<TextInput label="Search" style={styles.searchbar} value={search} onChangeText={(text) => setSearch(text)} />
 
@@ -66,7 +66,7 @@ const NotesDisplay = ({ route, navigation }) => {
 					))}
 				</View>
 			)}
-		</>
+		</ScrollView>
 	);
 };
 

@@ -60,13 +60,6 @@ const FoldersDisplay = ({ navigation }) => {
 		hideDialog();
 	};
 
-	const deleteThis = async (folderID) => {
-		deleteFolder(folderID, userData, setUserData);
-	};
-
-	const renameFolder = async (newName, folderId) => {
-		changeFolderName(folderId, newName, userData, setUserData);
-	};
 	const hideDialog = () => {
 		setVisible(false);
 	};
@@ -78,7 +71,7 @@ const FoldersDisplay = ({ navigation }) => {
 			{currentDisplay && (
 				<View style={styles.folderDisplay}>
 					{currentDisplay.map((folder) => (
-						<Folder key={folder.folder_id} folder={folder} deleteThis={deleteThis} renameFolder={renameFolder} />
+						<Folder key={folder.folder_id} folder={folder}/>
 					))}
 				</View>
 			)}

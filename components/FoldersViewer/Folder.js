@@ -1,21 +1,33 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useState, useContext } from "react";
-
+import { deleteFolder, changeFolderName } from "../../handleData";
 import { List, Card } from "react-native-paper";
 import styles from "./FolderStyles";
 import * as Haptics from "expo-haptics";
 import { UserNotes } from "../../UserNotes";
 import { FolderOptions } from "./FolderPortals";
 
-const Folder = ({ folder, deleteThis, renameFolder }) => {
+const Folder = ({ folder }) => {
 	const navigation = useNavigation();
 	const [visible, setVisible] = useState(false);
+	const { userData, setUserData } = useContext(UserNotes);
+
 	const showModal = () => {
 		Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 		setVisible(true);
 	};
 
 	const hideModal = () => setVisible(false);
+
+	const deleteThis = async () => {
+		await deleteFolder(folder.folder_id, userData, setUserData);
+		hideModal();
+	};
+
+	const renameFolder = async (newName) => {
+		await changeFolderName(folder.folder_id, newName, userData, setUserData);
+		hideModal();
+	};
 
 	const goToFolder = () => {
 		Haptics.selectionAsync();
@@ -25,20 +37,10 @@ const Folder = ({ folder, deleteThis, renameFolder }) => {
 		});
 	};
 
-	const deleteThisFolder = () => {
-		deleteThis(folder.folder_id)
-		hideModal()
-	}
-
-	const renameThisFolder = (newName) => {	
-		renameFolder(newName, folder.folder_id)
-		hideModal()
-	}
-
 	return (
 		<>
 			{visible && (
-				<FolderOptions folder={folder} renameFolder={renameThisFolder} deleteThis={deleteThisFolder} hideModal={hideModal} />
+				<FolderOptions folder={folder} renameFolder={renameFolder} deleteThis={deleteThis} hideModal={hideModal} />
 			)}
 
 			<Card elevation={2} style={styles.folderItem} onLongPress={showModal} onPress={goToFolder}>

@@ -12,9 +12,9 @@ const NotePad = ({ route, navigation }) => {
 
 	const ActionButton = () => {
 		return editing ? (
-			<Button onPress={saveContent} icon="" title="Save" />
+			<Button onPress={saveContent} title="Save" />
 		) : (
-			<Button onPress={() => setEditing(true)} icon="content-save-outline" title="Edit" />
+			<Button onPress={() => setEditing(true)} title="Edit" />
 		);
 	};
 
@@ -36,7 +36,6 @@ const NotePad = ({ route, navigation }) => {
 	const saveContent = async () => {
 		setEditing(false);
 		await saveNoteContent(noteContent, route.params.noteId, route.params.folderId, userData, setUserData);
-		
 	};
 
 	useEffect(() => {
@@ -48,7 +47,7 @@ const NotePad = ({ route, navigation }) => {
 			<TextInput
 				style={styles.textInput}
 				multiline={true}
-				placeholder="Type here"
+				placeholder="Press the edit button to start editing. Make sure to save your note."
 				onChangeText={(text) => setNoteContent(text)}
 				defaultValue={noteContent}
 				editable={editing}

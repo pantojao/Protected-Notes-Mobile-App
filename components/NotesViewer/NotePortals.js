@@ -13,7 +13,12 @@ export const NewNotePortal = ({ addNewNote, hideDialog }) => {
 				<Dialog.Title>New Note</Dialog.Title>
 				<Dialog.Content>
 					<Paragraph>Enter name for your new note.</Paragraph>
-					<TextInput label="Search" value={newNote} autoCorrect={false} onChangeText={(text) => setNewNote(text)} />
+					<TextInput
+						label="Search"
+						value={newNote}
+						autoCorrect={false}
+						onChangeText={(text) => setNewNote(text)}
+					/>
 				</Dialog.Content>
 				<Dialog.Actions>
 					<Button onPress={hideDialog}>Cancel</Button>
@@ -40,10 +45,10 @@ export const NoteOptions = ({ noteName, hideModal, editNoteName, deleteThis, mov
 			<Portal>
 				<Modal visible={true} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
 					<Text style={styles.portalOptionsTitle}>{noteName}</Text>
-					<Button onPress={showEditMenu} style={styles.noteOptionsBtns}  mode="outlined">
+					<Button onPress={showEditMenu} style={styles.noteOptionsBtns} mode="outlined">
 						Edit Name
 					</Button>
-					<Button onPress={showMoveMenu} style={styles.noteOptionsBtns}  mode="outlined">
+					<Button onPress={showMoveMenu} style={styles.noteOptionsBtns} mode="outlined">
 						Move Note
 					</Button>
 					<Button onPress={deleteThis} style={styles.noteOptionsBtns} color="red" dark={true} mode="contained">
@@ -65,7 +70,12 @@ const EditNamePortal = ({ editNoteName, hideEditMenu }) => {
 				<Dialog.Title>Change Note Name</Dialog.Title>
 				<Dialog.Content>
 					<Paragraph>Enter New Name</Paragraph>
-					<TextInput label="Search" value={newName} autoCorrect={false} onChangeText={(text) => setNewName(text)} />
+					<TextInput
+						label="Search"
+						value={newName}
+						autoCorrect={false}
+						onChangeText={(text) => setNewName(text)}
+					/>
 				</Dialog.Content>
 				<Dialog.Actions>
 					<Button onPress={hideEditMenu}>Cancel</Button>

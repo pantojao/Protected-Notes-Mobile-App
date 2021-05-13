@@ -5,17 +5,16 @@ import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
 import styles from "./FolderStyles";
 import * as Haptics from "expo-haptics";
-import { addFolder } from "../../handleData"
+import { addFolder } from "../../handleData";
 import { deleteFolder, changeFolderName } from "../../handleData";
 
 import { AddFolderPortal } from "./FolderPortals";
 
 const FoldersDisplay = ({ navigation }) => {
-	const { userData, setUserData } = useContext(UserNotes)
+	const { userData, setUserData } = useContext(UserNotes);
 	const [currentDisplay, setCurrentDisplay] = useState(null);
 	const [visible, setVisible] = useState(false);
 	const [search, setSearch] = useState("");
-
 
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
@@ -45,7 +44,7 @@ const FoldersDisplay = ({ navigation }) => {
 	}, [search]);
 
 	useEffect(() => {
-		if (!userData) return  
+		if (!userData) return;
 		setCurrentDisplay(userData.folders);
 	}, [userData, setUserData]);
 
@@ -70,7 +69,7 @@ const FoldersDisplay = ({ navigation }) => {
 			{currentDisplay && (
 				<View style={styles.folderDisplay}>
 					{currentDisplay.map((folder) => (
-						<Folder key={folder.folder_id} folder={folder}/>
+						<Folder key={folder.folder_id} folder={folder} />
 					))}
 				</View>
 			)}

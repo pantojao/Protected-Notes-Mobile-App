@@ -55,12 +55,7 @@ const NotesCard = ({ noteId, note, folderId }) => {
 			)}
 
 			<Card style={styles.noteCard} onPress={openNotePad} onLongPress={showModal} elevation={2}>
-				<Card.Title
-					titleStyle={{
-						fontSize: 15,
-					}}
-					title={note.note_name}
-				/>
+				<Card.Title title={note.note_name} />
 			</Card>
 		</>
 	);

@@ -22,13 +22,11 @@ const Folder = ({ folder }) => {
 	const deleteThis = async () => {
 		hideModal();
 		await deleteFolder(folder.folder_id, userData, setUserData);
-		
 	};
 
 	const renameFolder = async (newName) => {
 		hideModal();
 		await changeFolderName(folder.folder_id, newName, userData, setUserData);
-
 	};
 
 	const goToFolder = () => {

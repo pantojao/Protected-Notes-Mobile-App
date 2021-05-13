@@ -1,7 +1,7 @@
-import React, { useState,  useContext } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-import {UserNotes } from '../../UserNotes'
+import { UserNotes } from "../../UserNotes";
 import firebase from "firebase";
 
 import { useNavigation } from "@react-navigation/native";
@@ -18,14 +18,14 @@ export default function Login() {
 	const signIn = async () => {
 		try {
 			const response = await firebase.auth().signInWithEmailAndPassword(email, password);
-			await getData(userData, setUserData)
+			await getData(userData, setUserData);
 		} catch (error) {
 			setEmailLabel("Email or password is invalid.");
 		}
 	};
 	const redirectToRegister = (response) => {
 		navigation.navigate("Register");
-	}; 
+	};
 	const removeLabels = () => setEmailLabel(null);
 
 	return (

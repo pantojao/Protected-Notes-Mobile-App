@@ -5,6 +5,7 @@ import { List, Card } from "react-native-paper";
 import styles from "./FolderStyles";
 import * as Haptics from "expo-haptics";
 import { UserNotes } from "../../UserNotes";
+import { Platform } from 'react-native';
 import { FolderOptions } from "./FolderPortals";
 
 const Folder = ({ folder }) => {
@@ -13,7 +14,7 @@ const Folder = ({ folder }) => {
 	const { userData, setUserData } = useContext(UserNotes);
 
 	const showModal = () => {
-		Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+		if (Platform.OS === "ios" || Platform.OS === "android") Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 		setVisible(true);
 	};
 
@@ -30,7 +31,7 @@ const Folder = ({ folder }) => {
 	};
 
 	const goToFolder = () => {
-		Haptics.selectionAsync();
+		if (Platform.OS === "ios" || Platform.OS === "android") Haptics.selectionAsync();
 		navigation.navigate("NotesDisplay", {
 			folderId: folder.folder_id,
 			name: folder.folder_name,

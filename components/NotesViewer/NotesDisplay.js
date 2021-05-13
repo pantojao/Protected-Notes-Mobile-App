@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Platform } from "react-native";
 import { TextInput, Button,IconButton } from "react-native-paper";
 import { NewNotePortal } from "./NotePortals";
 import * as Haptics from "expo-haptics";
@@ -40,7 +40,10 @@ const NotesDisplay = ({ route, navigation }) => {
 	}, [search]);
 
 	const showDialog = () => {
-		Haptics.selectionAsync();
+		if (Platform.OS === "ios" || Platform.OS === "android"){
+			Haptics.selectionAsync();
+		} 		
+
 		setVisible(true);
 	};
 

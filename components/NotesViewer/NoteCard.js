@@ -6,6 +6,7 @@ import * as Haptics from "expo-haptics";
 import { UserNotes } from "../../UserNotes";
 import { moveNote, deleteNote, changeNoteName } from "../../handleData";
 import { NoteOptions } from "./NotePortals";
+import { Platform } from "react-native";
 
 const NotesCard = ({ noteId, note, folderId }) => {
 	const [visible, setVisible] = useState(false);
@@ -13,13 +14,18 @@ const NotesCard = ({ noteId, note, folderId }) => {
 	const navigation = useNavigation();
 
 	const showModal = () => {
-		Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+		if (Platform.OS === "ios" || Platform.OS === "android"){
+			Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+		}
 		setVisible(true);
 	};
 
 	const hideModal = () => setVisible(false);
 	const openNotePad = () => {
-		Haptics.selectionAsync();
+		if (Platform.OS === "ios" || Platform.OS === "android"){
+			Haptics.selectionAsync();
+		}
+
 		navigation.navigate("NotePad", {
 			noteId: noteId,
 			folderId: folderId,

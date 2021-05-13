@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider as PaperProvider } from "react-native-paper";
-import { Text } from "react-native";
 import FoldersDisplay from "./components/FoldersViewer/FoldersDisplay";
 import NotesDisplay from "./components/NotesViewer/NotesDisplay";
 import NotePad from "./components/NotePad/NotePad";

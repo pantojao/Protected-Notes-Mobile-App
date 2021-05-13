@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Platform } from "react-native";
 import { TextInput, Button, IconButton } from "react-native-paper";
 import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
@@ -49,7 +49,7 @@ const FoldersDisplay = ({ navigation }) => {
 	}, [userData, setUserData]);
 
 	const showDialog = () => {
-		Haptics.selectionAsync();
+		if (Platform.OS === "ios" || Platform.OS === "android") Haptics.selectionAsync();
 		setVisible(true);
 	};
 

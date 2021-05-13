@@ -9,8 +9,10 @@ import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import Settings from "./Settings";
 import { UserNotes } from "./UserNotes";
-import * as firebase from "firebase";
+import firebase from "firebase";
+import 'firebase/auth'
 import { getData } from "./handleData";
+
 const Stack = createStackNavigator();
 
 export default function App() {

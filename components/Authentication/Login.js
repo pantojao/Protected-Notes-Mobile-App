@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { UserNotes } from "../../UserNotes";
 import firebase from "firebase";
-
+import 'firebase/auth'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./AuthenticationStyles";
 import { getData } from "../../handleData";

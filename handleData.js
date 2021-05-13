@@ -1,5 +1,5 @@
-import * as firebase from "firebase";
-
+import firebase from "firebase/app";
+import 'firebase/firestore'
 const firebaseConfig = {
 	apiKey: "AIzaSyD8ZvWx_uMqFy7RV1cPiGyucWcHG2uAIVw",
 	authDomain: "passwordnotes-8c7df.firebaseapp.com",
@@ -9,7 +9,11 @@ const firebaseConfig = {
 	appId: "1:475930463775:web:092bbff5ba87def9fa8f2a",
 };
 
-if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length){ 
+	firebase.initializeApp(firebaseConfig);
+} else {
+	firebase.app();
+}
 const db = firebase.firestore();
 
 export const getData = async (userData, setUserData) => {

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import styles from "./NotePadStyles";
 import { UserNotes } from "../../UserNotes";
-import { TextInput, Button, ScrollView } from "react-native";
+import { TextInput, ScrollView } from "react-native";
 import { saveNoteContent } from "../../handleData";
 import { IconButton } from "react-native-paper";
 

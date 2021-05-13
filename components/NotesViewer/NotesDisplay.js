@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, ScrollView, Platform } from "react-native";
-import { TextInput, Button,IconButton } from "react-native-paper";
+import { TextInput, IconButton } from "react-native-paper";
 import { NewNotePortal } from "./NotePortals";
 import * as Haptics from "expo-haptics";
 import styles from "./NotesDisplayStyles";

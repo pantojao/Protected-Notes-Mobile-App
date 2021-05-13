@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect} from "react";
 import { View, ScrollView, Platform } from "react-native";
-import { TextInput, Button, IconButton } from "react-native-paper";
+import { TextInput, IconButton } from "react-native-paper";
 import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
 import styles from "./FolderStyles";

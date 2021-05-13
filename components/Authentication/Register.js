@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import firebase from "firebase";
+import 'firebase/auth'
 import styles from "./AuthenticationStyles";
 export default function Register({ navigation }) {
 	const [email, setEmail] = useState("");

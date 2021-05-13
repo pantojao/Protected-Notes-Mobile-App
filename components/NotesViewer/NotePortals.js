@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { TextInput, Button, Paragraph, Dialog, Modal, Portal, Menu, RadioButton } from "react-native-paper";
+import {  Text, ScrollView } from "react-native";
+import { TextInput, Button, Paragraph, Dialog, Modal, Portal,  RadioButton } from "react-native-paper";
 import styles from "./NotesDisplayStyles";
 import { UserNotes } from "../../UserNotes";
 

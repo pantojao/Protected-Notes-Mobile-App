@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import { TextInput, Button, Paragraph, Dialog, Modal, Portal } from "react-native-paper";
 import styles from "./FolderStyles";
 

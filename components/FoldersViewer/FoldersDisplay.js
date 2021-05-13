@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { View, ScrollView } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, IconButton } from "react-native-paper";
 import Folder from "./Folder";
 import { UserNotes } from "../../UserNotes";
 import styles from "./FolderStyles";
 import * as Haptics from "expo-haptics";
 import { addFolder } from "../../handleData";
-import { deleteFolder, changeFolderName } from "../../handleData";
+
 
 import { AddFolderPortal } from "./FolderPortals";
 
@@ -18,12 +18,12 @@ const FoldersDisplay = ({ navigation }) => {
 
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
-			headerRight: () => <Button icon="plus" mode="text" labelStyle={{ fontSize: 25 }} onPress={showDialog} />,
+			headerRight: () => <IconButton icon="plus" color="blue" size={25} onPress={showDialog} />,
 			headerLeft: () => (
-				<Button
+				<IconButton
 					icon="account-settings"
-					mode="text"
-					labelStyle={{ fontSize: 25 }}
+					color="blue"
+					size={25}
 					onPress={() => navigation.navigate("Settings")}
 				/>
 			),
@@ -73,6 +73,7 @@ const FoldersDisplay = ({ navigation }) => {
 					))}
 				</View>
 			)}
+			
 		</ScrollView>
 	);
 };

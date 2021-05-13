@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, ScrollView } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button,IconButton } from "react-native-paper";
 import { NewNotePortal } from "./NotePortals";
 import * as Haptics from "expo-haptics";
 import styles from "./NotesDisplayStyles";
@@ -17,7 +17,7 @@ const NotesDisplay = ({ route, navigation }) => {
 
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
-			headerRight: () => <Button icon="plus" onPress={showDialog} mode="text" labelStyle={{ fontSize: 25 }} />,
+			headerRight: () => <IconButton icon="plus" color="blue" onPress={showDialog} size={25} />,
 			title: route.params.name,
 		});
 	}, [navigation]);

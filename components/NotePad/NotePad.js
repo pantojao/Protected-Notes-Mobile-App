@@ -3,6 +3,7 @@ import styles from "./NotePadStyles";
 import { UserNotes } from "../../UserNotes";
 import { TextInput, Button, ScrollView } from "react-native";
 import { saveNoteContent } from "../../handleData";
+import { IconButton } from "react-native-paper";
 
 const NotePad = ({ route, navigation }) => {
 	const { userData, setUserData } = useContext(UserNotes);
@@ -12,9 +13,9 @@ const NotePad = ({ route, navigation }) => {
 
 	const ActionButton = () => {
 		return editing ? (
-			<Button onPress={saveContent} title="Save" />
+			<IconButton icon="content-save" size={20} color="blue" onPress={saveContent} />
 		) : (
-			<Button onPress={() => setEditing(true)} title="Edit" />
+			<IconButton icon="pencil" size={20} color="blue" onPress={() => setEditing(true)} />
 		);
 	};
 

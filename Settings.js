@@ -30,7 +30,7 @@ const Settings = () => {
 					</Dialog.Actions>
 				</Dialog>
 			</Portal>
-			<View style={{ justifyContent: "space-evenly", height: "90%" }}>
+			<View style={{ justifyContent: "space-around", height: "30%" }}>
 				<Button onPress={changePassword}>Reset Password</Button>
 				<Button onPress={logout} color="red" mode="contained" style={{ width: 100, alignSelf: "center" }}>
 					Logout

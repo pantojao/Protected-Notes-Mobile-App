@@ -40,7 +40,7 @@ export default function Register({ navigation }) {
 	};
 
 	return (
-		<View>
+		<View style={styles.loginContainer}>
 			<TextInput style={styles.loginInputs} placeholder="Name" onChangeText={(name) => setName(name)} />
 			<TextInput
 				style={styles.loginInputs}

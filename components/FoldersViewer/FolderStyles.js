@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 	folderItem: {
 		width: "95%",
 		alignSelf: "center",
-		height: 70,
+		height: 80,
 		marginVertical: 7,
 	},
 	folderActions: {

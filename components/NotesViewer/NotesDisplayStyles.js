@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 	noteCard: {
 		marginVertical: 7,
 		width: "100%",
-		height: 70,
+		height: 80,
 	},
 	searchbar: {
 		height: 60,

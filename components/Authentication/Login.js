@@ -29,7 +29,7 @@ export default function Login() {
 	const removeLabels = () => setEmailLabel(null);
 
 	return (
-		<View>
+		<View style={styles.loginContainer}>
 			<TextInput
 				style={styles.loginInputs}
 				label={emailLabel}
